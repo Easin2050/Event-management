@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Tailwind Navbar & Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img class="h-8 w-auto" src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Logo">
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <input type="checkbox" id="menu-toggle" class="hidden peer">
+                <label for="menu-toggle" class="md:hidden p-2 border border-black rounded-lg cursor-pointer hover:bg-yellow-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </label>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Dashboard</a>
+                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Team</a>
+                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Projects</a>
+                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Calendar</a>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="hidden peer-checked:flex flex-col md:hidden bg-white shadow-md space-y-2 p-4">
+                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Dashboard</a>
+                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Team</a>
+                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Projects</a>
+                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Calendar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="relative w-full h-[500px]">
+        <img src="{% static "images/event_image_3.jpeg" %}" alt="Event" class="w-full h-full object-cover">
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <div class="absolute inset-0 flex flex-col items-center justify-center text-center text-white px-6">
+            <p class="text-xl uppercase tracking-widest">28 February</p>
+            <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold">Dhaka, Bangladesh</h1>
+            <h2 class="text-2xl sm:text-3xl font-bold text-yellow-400 mt-4">Gaming Tournament</h2>
+            <a href="#" class="mt-4 px-6 py-3 border border-yellow-400 text-yellow-400 rounded-full hover:bg-yellow-400 hover:text-black">
+                Event Details
+            </a>
+        </div>
+    </div>
+
+    <!-- Search & Category Section -->
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <!-- Search Bar -->
+        <div class="flex flex-col md:flex-row justify-center items-center gap-4">
+            <input type="text" placeholder="Search Here" 
+                class="w-full md:w-1/2 border-2 border-yellow-400 p-3 rounded-lg outline-none">
+            <button class="bg-yellow-400 text-black px-6 py-3 rounded-lg hover:bg-yellow-500 transition text-xl">
+                Search
+            </button>
+        </div>
+
+        <!-- Category Buttons -->
+        <div class="flex flex-wrap justify-center gap-4 mt-6">
+            <a href="#" class="px-6 py-3 border-2 border-yellow-400 text-black rounded-full bg-white hover:bg-yellow-400 transition">
+                Technology
+            </a>
+            <a href="#" class="px-6 py-3 border-2 border-yellow-500 text-black rounded-full bg-white hover:bg-yellow-400 transition">
+                Social
+            </a>
+            <a href="#" class="px-6 py-3 border-2 border-yellow-500 text-black rounded-full bg-white hover:bg-yellow-400 transition">
+                Business
+            </a>
+            <a href="#" class="px-6 py-3 border-2 border-yellow-500 text-black rounded-full bg-white hover:bg-yellow-400 transition">
+                Sports
+            </a>
+        </div>    
+    </div>
+
+<!--Event List-->
+<div class="flex justify-center items-center">
+    <div class="mx-auto text-center">
+        <h2 class="font-sans text-[50px] px-8">Event List</h2>
+    </div>
+</div>
+
+<div class="bg-white border-2 border-orange-500 shadow-lg rounded-lg overflow-hidden w-[80%] flex gap-4 p-4 ml-[140px] mt-4">
+    <div class="w-1/2 pr-3">
+        <img src="{% static "images/event_image_2.jpeg" %}" alt="Event Image" class="w-full h-50 object-cover rounded-lg">
+    </div>
+    <div class="w-1/2">
+        <h3 class="text-2xl font-bold">Intra University Gaming Contest</h3>
+        <p class="text-lg font-semibold mt-2">Description</p>
+        <p class="text-gray-600">Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt nesciunt, illo nihil corrupti reiciendis dolore Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis dicta, quia neque nostrum eos nisi eum vel et assumenda mollitia delectus. Repellendus optio laudantium corporis officia, voluptatum veniam nulla tenetur.</p>
+        <div class="mt-4 flex justify-content-center gap-6">
+            <div>
+                <h1 class="text-lg font-bold">Participants</h1>
+                <div class="w-16 h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
+                    <h2 class="text-lg font-bold">26</h2>
+                </div>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold">Location</h1>
+                <div class="w-16 h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
+                    <h2 class="text-lg font-bold">Hall 4</h2>
+                </div>
+            </div>
+        </div>
+        <button class="bg-yellow-400 text-black px-6 py-2 rounded-lg hover:bg-yellow-500 transition text-lg mt-4 w-50px justify-content-center">
+            Details
+        </button>
+    </div>
+</div>
+
+</body>
+</html>
