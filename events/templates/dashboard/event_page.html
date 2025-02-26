@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Tailwind Navbar & Search</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img class="h-8 w-auto" src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Logo">
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <input type="checkbox" id="menu-toggle" class="hidden peer">
+                <label for="menu-toggle" class="md:hidden p-2 border border-black rounded-lg cursor-pointer hover:bg-yellow-400">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </label>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Dashboard</a>
+                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Team</a>
+                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Projects</a>
+                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Calendar</a>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div class="hidden peer-checked:flex flex-col md:hidden bg-white shadow-md space-y-2 p-4">
+                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Dashboard</a>
+                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Team</a>
+                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Projects</a>
+                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Calendar</a>
+            </div>
+        </div>
+    </nav>
+
+</body>
+</html>
