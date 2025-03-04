@@ -1,50 +1,35 @@
+{% extends "dashboard/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Tailwind Navbar & Search</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100">
-
-    <!-- Navbar -->
-    <nav class="bg-white shadow-md">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <img class="h-8 w-auto" src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500" alt="Logo">
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <input type="checkbox" id="menu-toggle" class="hidden peer">
-                <label for="menu-toggle" class="md:hidden p-2 border border-black rounded-lg cursor-pointer hover:bg-yellow-400">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </label>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex space-x-6">
-                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Dashboard</a>
-                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Team</a>
-                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Projects</a>
-                    <a href="#" class="text-lg font-medium text-black hover:text-yellow-500 text-xl">Calendar</a>
+{% block event_card %}
+<!--Event info page-->
+<div class="mx-12">
+    <h1 class="text-6xl text-yellow-500 mt-4">Event Name</h1>
+    <div class="w-96 md:w-1/2 mt-4">
+        <img src="{% static 'images/event-3.jpg' %}" alt="Event Image" class="w-full h-56 md:h-80 object-cover rounded-lg">
+    </div>
+    <div class="w-1/2 mt-4">
+        <div class="flex gap-6 mt-4">
+            <div>
+                <h1 class="text-lg font-bold">Date</h1>
+                <div class="w-16 h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
+                    <h2 class="text-lg font-bold">26</h2>
                 </div>
             </div>
-
-            <!-- Mobile Menu -->
-            <div class="hidden peer-checked:flex flex-col md:hidden bg-white shadow-md space-y-2 p-4">
-                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Dashboard</a>
-                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Team</a>
-                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Projects</a>
-                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Calendar</a>
+            <div>
+                <h1 class="text-lg font-bold">Time</h1>
+                <div class="w-40 h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
+                    <h2 class="text-lg font-bold">10:30 pm</h2>
+                </div>
+            </div>
+            <div>
+                <h1 class="text-lg font-bold">Location</h1>
+                <div class="w-16 h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
+                    <h2 class="text-lg font-bold">Dhaka</h2>
+                </div>
             </div>
         </div>
-    </nav>
-
-</body>
-</html>
+    </div>
+    <h1 class="text-4xl text-yellow-400 mt-4">Description</h1>
+    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius ipsum voluptates molestiae molestias quo modi voluptate est, nesciunt consequuntur dolor perferendis, ipsam, nobis illo adipisci ipsa? Esse nisi laudantium sequi!</p>
+</div>
+{% endblock event_card %}
