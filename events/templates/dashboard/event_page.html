@@ -3,33 +3,58 @@
 {% block event_card %}
 <!--Event info page-->
 <div class="mx-12">
-    <h1 class="text-6xl text-yellow-500 mt-4">Event Name</h1>
-    <div class="w-96 md:w-1/2 mt-4">
-        <img src="{% static 'images/event-3.jpg' %}" alt="Event Image" class="w-full h-56 md:h-80 object-cover rounded-lg">
-    </div>
-    <div class="w-1/2 mt-4">
-        <div class="flex gap-6 mt-4">
-            <div>
-                <h1 class="text-lg font-bold">Date</h1>
-                <div class="w-16 h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
-                    <h2 class="text-lg font-bold">26</h2>
+    <h1 class="text-5xl text-gray-600 mt-4 font-bold">Event Name</h1>
+    <div class="w-full md:w-3/4 lg:w-2/3 mt-4">
+        <img src="{% static 'images/event-3.jpg' %}" 
+             alt="Event Image" 
+             class="w-[55%] h-auto aspect-[16/7] object-cover">
+    </div>    
+    <div class="w-full mt-4 px-4">
+        <div class="flex flex-col md:flex-row gap-4 mt-4">
+            <div class="p-4 flex-1 bg-black">
+                <div class="flex items-start gap-4">
+                    <div class="bg-yellow-400 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.666 3.888A2.25 2.25 0 0 0 13.5 2.25h-3c-1.03 0-1.9.693-2.166 1.638m7.332 0c.055.194.084.4.084.612v0a.75.75 0 0 1-.75.75H9a.75.75 0 0 1-.75-.75v0c0-.212.03-.418.084-.612m7.332 0c.646.049 1.288.11 1.927.184 1.1.128 1.907 1.077 1.907 2.185V19.5a2.25 2.25 0 0 1-2.25 2.25H6.75A2.25 2.25 0 0 1 4.5 19.5V6.257c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 1.927-.184" />
+                        </svg>
+                    </div>
+                        <div>
+                        <h3 class="text-base font-bold text-white mb-2">Event Date</h3>
+                        <p class="text-2xl font-semibold text-white mb-1">26 DEC</p>
+                    </div>
                 </div>
             </div>
-            <div>
-                <h1 class="text-lg font-bold">Time</h1>
-                <div class="w-40 h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
-                    <h2 class="text-lg font-bold">10:30 pm</h2>
+            <div class="p-4 flex-1 bg-black">
+                <div class="flex items-start gap-4">
+                    <div class="bg-yellow-400 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                          </svg>   
+                    </div>
+                        <div>
+                        <h3 class="text-base font-bold text-white mb-2">Event Time</h3>
+                        <p class="text-2xl font-semibold text-white mb-1">10 am-5 pm</p>
+                    </div>
                 </div>
             </div>
-            <div>
-                <h1 class="text-lg font-bold">Location</h1>
-                <div class="w-16 h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
-                    <h2 class="text-lg font-bold">Dhaka</h2>
+            <div class="p-4 flex-1 bg-black">
+                <div class="flex items-start gap-4">
+                    <div class="bg-yellow-400 p-3 rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 text-white">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                          </svg>
+                                                
+                    </div>
+                        <div>
+                        <h3 class="text-base font-bold text-white mb-2">Event Location</h3>
+                        <p class="text-2xl font-semibold text-white mb-1">Dhaka</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <h1 class="text-4xl text-yellow-400 mt-4">Description</h1>
-    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius ipsum voluptates molestiae molestias quo modi voluptate est, nesciunt consequuntur dolor perferendis, ipsam, nobis illo adipisci ipsa? Esse nisi laudantium sequi!</p>
+    <p>Lorem, ipsum dolor sit Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis harum, deserunt, accusantium ea repellat sequi necessitatibus, eligendi debitis vitae laboriosam ullam tenetur minus animi omnis perspiciatis eveniet tempora vel dolores. amet consectetur adipisicing elit. Eius ipsum voluptates molestiae molestias quo modi voluptate est, nesciunt consequuntur dolor perferendis, ipsam, nobis illo adipisci ipsa? Esse nisi laudantium sequi!</p>
 </div>
 {% endblock event_card %}
