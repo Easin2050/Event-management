@@ -6,6 +6,7 @@ from django.utils import timezone
 from events.forms import EventModelForm,ParticipantForm,CategoryForm
 from events.models import Event,Participant,Category
 from django.contrib import messages
+from datetime import datetime
 
 def home_page(request):
      return render(request, "dashboard/homepage.html")
@@ -84,7 +85,19 @@ def base(request):
 def search(request):
     total_category = Category.objects.all()
     query = request.GET.get('q', '')
+    category_query=request.GET.get('type','')
     events = Event.objects.all()
+    first_date = request.GET.get('start_date', '')
+    second_date = request.GET.get('end_date', '')
+    if first_date and second_date:
+        events = events.filter(date__gte=first_date, date__lte=second_date)
+        print("Date:", first_date, " ", second_date)
+    else:
+        print("Skipping date")
+
+    if category_query:
+        events = events.filter(category__name=category_query)
+    print("Category:",category_query)
     if query:
         events = events.filter(
             Q(name__icontains=query) | 

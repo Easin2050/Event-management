@@ -1,16 +1,12 @@
 from django import forms
-from django.forms import SelectDateWidget, TimeInput
 from events.models import Category,Participant,Event
+from django.core.exceptions import ValidationError
+from datetime import date
 
-# Django Model form
 class EventModelForm(forms.ModelForm):
     class Meta:
         model = Event
         fields = ['name', 'description', 'date', 'time', 'location', 'category', 'participants']
-        widgets={
-            'date':forms.SelectDateWidget,
-            'time':forms.TimeInput
-        }
         widgets = {
             'name': forms.TextInput(attrs={
                 'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2",
@@ -38,6 +34,16 @@ class EventModelForm(forms.ModelForm):
                 'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2"
             })
         }
+
+    def clean_date(self):
+        event_date = self.cleaned_data.get('date')
+        if event_date is None:
+            raise ValidationError("Event date is required.") 
+        if not isinstance(event_date, date):
+            raise ValidationError("Invalid date format.")
+        if event_date < date.today():
+            raise ValidationError("You cannot create an event with a past date.")
+        return event_date 
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
