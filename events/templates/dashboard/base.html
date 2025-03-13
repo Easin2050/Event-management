@@ -13,33 +13,30 @@
      {% block navbar %} <nav class="bg-white shadow-md">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
-                
-                <!-- Logo -->
-                <div class="flex items-center">
+                <a href="{% url "home-page" %}"><div class="flex items-center">
                     <img class="h-16 w-[400px] object-contain" src="{% static 'images/logo.png' %}" alt="Logo">
-                </div>        
-                
+                </div></a>      
                 <!-- Mobile Menu Button -->
-                <input type="checkbox" id="menu-toggle" class="hidden peer"> <!-- Ensure 'peer' class is present -->
+                <input type="checkbox" id="menu-toggle" class="hidden peer">
                 <label for="menu-toggle" class="md:hidden p-2 border border-black rounded-lg cursor-pointer hover:bg-yellow-400">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
                     </svg>
                 </label>
-    
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-6">
-                    <a href="#" class="font-medium text-black hover:text-yellow-500 text-xl">Dashboard</a>
-                    <a href="#" class="font-medium text-black hover:text-yellow-500 text-xl">Contact</a>
-                    <a href="#" class="font-medium text-black hover:text-yellow-500 text-xl">Calendar</a>
+                    <a href="{% url "dashboard" %}" class="font-medium text-black hover:text-yellow-500 text-xl">Dashboard</a>
+                    <a href="{% url "create-event" %}" class="font-medium text-black hover:text-yellow-500 text-xl">Create Event</a>
+                    <a href="{% url "create-category" %}" class="font-medium text-black hover:text-yellow-500 text-xl">Create Category</a>
+                    <a href="{% url "create-participant" %}" class="font-medium text-black hover:text-yellow-500 text-xl">Create Participant</a>
                 </div>
             </div>
-    
             <!-- Mobile Menu -->
             <div class="mobile-menu hidden peer-checked:flex flex-col md:hidden bg-white shadow-md space-y-2 p-4">
-                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Dashboard</a>
-                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Contect</a>
-                <a href="#" class="block py-2 px-4 text-black hover:bg-yellow-400">Calendar</a>
+                <a href="{% url "dashboard" %}" class="block py-2 px-4 text-black hover:bg-yellow-400">Dashboard</a>
+                <a href="{% url "create-event" %}" class="block py-2 px-4 text-black hover:bg-yellow-400">Create Event</a>
+                <a href="{% url "create-category" %}" class="block py-2 px-4 text-black hover:bg-yellow-400">Create Category</a>
+                <a href="{% url "create-participant" %}" class="block py-2 px-4 text-black hover:bg-yellow-400">Create Participant</a>
             </div>
         </div>
     </nav>{% endblock navbar %}
@@ -70,7 +67,7 @@
 
 <!--Footer-->
 {% block footer %}
-<footer class="bg-black shadow-md w-full mt-8">
+<footer class="bg-black shadow-md w-full">
     <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div class="sm:flex sm:items-center sm:justify-between">
             <h1 class="text-white font-bold text-3xl">Event Management</h1>

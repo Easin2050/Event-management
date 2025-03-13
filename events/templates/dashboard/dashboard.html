@@ -1,8 +1,7 @@
 {% extends "dashboard/base.html" %}
 
 {% block hero_section %}
-<!-- Centered Buttons -->
-<div class="flex justify-center gap-4 m-4">
+{% comment %} <div class="flex justify-center gap-4 m-4">
     <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition h-12 w-32 text-xl">
         Event
     </button>
@@ -12,131 +11,98 @@
     <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition h-12 w-32 text-xl">
         Category
     </button>
-</div>
+</div> {% endcomment %}
 
 <!-- Event Cards -->
 <div class="max-w-[1200px] mx-auto p-6">
     <div class="grid grid-cols-4 gap-6 mb-8 pt-8">
+        <a href="{% url "dashboard" %}?type=total_participants">
         <div class="bg-green-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
             <h3 class="text-sm font-bold text-black mb-4">Total Participant</h3>
-            <p class="text-3xl font-semibold">20</p>
-        </div>
-        
+            <p class="text-3xl font-semibold">{{total_participants}}</p>
+        </div></a>
+        <a href="{% url "dashboard" %}?type=total_events">
         <div class="bg-purple-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
             <h3 class="text-sm font-bold text-black mb-4">Total Event</h3>
-            <p class="text-3xl font-semibold">20</p>
-        </div>
-
+            <p class="text-3xl font-semibold">{{ event_counts.total_events }}</p>
+        </div></a>
+        <a href="{% url "dashboard" %}?type=upcoming_events">
         <div class="bg-red-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
             <h3 class="text-sm font-bold text-black mb-4">Upcoming Event</h3>
-            <p class="text-3xl font-semibold">20</p>
-        </div>
-
+            <p class="text-3xl font-semibold">{{event_counts.upcoming_events}}</p>
+        </div></a>
+        <a href="{% url "dashboard" %}?type=past_events">
         <div class="bg-blue-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
             <h3 class="text-sm font-bold text-black mb-4">Past Events</h3>
-            <p class="text-3xl font-semibold">20</p>
-        </div>
+            <p class="text-3xl font-semibold">{{event_counts.past_events}}</p>
+        </div></a>
     </div>
+
     <p class="text-black font-bold mb-4 text-2xl">Event Details</p>
 
     <!-- Task Table -->
     <div class="bg-green-200 rounded-xl shadow-2xl">
         <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
-        <div>Name</div>
-        <div>Date</div>
-        <div>Time</div>
-        <div>Location</div>
-      </div>
-
-      <div class="grid grid-cols-4 p-4 border-b border-white text-base text-gray-900 items-center">
-        <div class="font-medium text-black">Name</div>
-        <div class="text-black">Date</div>
-        <div class="text-black">Time</div>
-        <div class="text-black">Location</div>
-        <div class="col-span-4 flex gap-2 justify-end">
-          <button class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
-            Upgrade
-          </button>
-          <button class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition p-3">
-            Delete
-          </button>
+            <div>Name</div>
+            <div>Date</div>
+            <div>Time</div>
+            <div>Location</div>
         </div>
-      </div> 
-<div class="grid grid-cols-4 p-4 border-b border-gray-200 text-base text-gray-900 items-center">
-    <div class="font-medium text-black">Name</div>
-    <div class="text-black">Date</div>
-    <div class="text-black">Time</div>
-    <div class="text-black">Location</div>
-    <div class="col-span-4 flex gap-2 justify-end">
-      <button class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
-        Upgrade
-      </button>
-      <button class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition p-3">
-        Delete
-      </button>
+
+        {% for event in events %}
+        <div class="grid grid-cols-4 p-4 border-b border-white text-base text-gray-900 items-center">
+            <div class="font-medium text-black">{{ event.name }}</div>
+            <div class="text-black">{{ event.date }}</div>
+            <div class="text-black">{{ event.time }}</div>
+            <div class="text-black">{{ event.location }}</div>
+            <div class="col-span-4 flex gap-2 justify-end">
+               <a href='{%url "update" event.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
+                        Upgrade
+                </a>
+                <form action="{% url 'delete' event.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition p-3">
+                        Delete
+                    </button>
+                </form>                
+            </div>
+        </div>
+    {% endfor %}
     </div>
-  </div>  
-    </div>
-    {% comment %} <div class="grid grid-cols-4 gap-6 mb-8 pt-8 lg-grid-cols-4 sm-grid-cols-1">
-        <div class="bg-white rounded-xl p-6 shadow-2xs w-full overflow-hidden">
-            <p class="text-lg font-semibold text-gray-800">Name: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Date: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Time: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Location: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Categoty: <span class="text-gray-600">Family Time</span></p>
-            <div class="gap-6">
-                <button class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition">
-                    Upgrade
-                </button>
-                <button class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition">
-                    Delete
-                </button>
-            </div>
-        </div>
-        
-        <div class="bg-white rounded-xl p-6 shadow-2xs w-full overflow-hidden">
-            <p class="text-lg font-semibold text-gray-800">Name: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Date: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Time: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Location: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Categoty: <span class="text-gray-600">Family Time</span></p>
-            <div class="gap-6">
-                <button class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition">
-                    Upgrade
-                </button>
-                <button class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition">
-                    Delete
-                </button>
-            </div>
-        </div>
 
-        <div class="bg-white rounded-xl p-6 shadow-2xs w-full overflow-hidden">
-            <p class="text-lg font-semibold text-gray-800">Name: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Date: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Time: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Location: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Categoty: <span class="text-gray-600">Family Time</span></p>
-            <div class="gap-6">
-                <button class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition">
+    
+    {% comment %} <p class="text-black font-bold mb-4 mt-4 text-2xl">Participant Details</p>
+    {% for participant in participants %}<div class="bg-green-200 rounded-xl shadow-2xl">
+        <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
+            <div>Name</div>
+        </div>
+        <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
+            <div class="font-medium text-black">{{participant.name}}</div>
+    
+            <div class="col-span-3 flex justify-end gap-2">
+                <button class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
                     Upgrade
                 </button>
-                <button class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition">
+                <button class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition p-3">
                     Delete
                 </button>
             </div>
         </div>
+    </div>{% endfor %} {% endcomment %}
 
-        <div class="bg-white rounded-xl p-6 shadow-2xs w-full overflow-hidden">
-            <p class="text-lg font-semibold text-gray-800">Name: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Date: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Time: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Location: <span class="text-gray-600">Family Time</span></p>
-            <p class="text-lg font-semibold text-gray-800">Categoty: <span class="text-gray-600">Family Time</span></p>
-            <div class="gap-6">
-                <button class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition">
+    {% comment %} <p class="text-black font-bold mb-4 mt-4 text-2xl">Category Details</p>
+
+    <div class="bg-green-200 rounded-xl shadow-2xl">
+        <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
+            <div>Name</div>
+        </div>
+        <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
+            <div class="font-medium text-black">Name</div>
+            <div class="col-span-3 flex justify-end gap-2">
+                <button class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
                     Upgrade
                 </button>
-                <button class="bg-red-500 text-white px-6 py-2 rounded-lg hover:bg-red-600 transition">
+                <button class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition p-3">
                     Delete
                 </button>
             </div>

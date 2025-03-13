@@ -1,99 +1,133 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
+from django.db.models import Q
+from django.db.models import Count
+from django.utils import timezone
 from events.forms import EventModelForm,ParticipantForm,CategoryForm
 from events.models import Event,Participant,Category
+from django.contrib import messages
 
 def home_page(request):
      return render(request, "dashboard/homepage.html")
 
-def event_page(request):
-     return render(request,"dashboard/event_page.html")
-
-# def create_event(request):
-#     participants = Participant.objects.all() 
-#     form = EventForm(participants=participants)
-
-#     if request.method == "POST":
-#         form = EventForm(request.POST, participants=participants)  
-#         if form.is_valid():
-#             data = form.cleaned_data
-#             name = data.get("name")
-#             description = data.get("description")
-#             date = data.get("date")
-#             time = data.get("time")
-#             location = data.get("location")
-#             category = data.get("category")  
-#             selected_participant = data.get("participants")  
-#             event = Event.objects.create(
-#                 name=name,
-#                 description=description,
-#                 date=date,
-#                 time=time,
-#                 location=location,
-#                 category=category,  
-#             )
-#             for part_id in selected_participant:
-#                  participant=Participant.objects.get(id=part_id)
-#                  event.participants.add(participant)
-
-#     return render(request, 'event_form.html', {"form": form})
 def create_event(request):
     participants = Participant.objects.all()  
     form = EventModelForm()
-
     if request.method == "POST":
         form = EventModelForm(request.POST)  
         if form.is_valid():
             form.save()
-            return render(request, 'event_form.html', {"form": form, "message": "Event added successfully"})
+            messages.success(request, "Event Created Successfully")
+            return redirect('create-event')
     return render(request, 'event_form.html', {"form": form})
 
-          #   data = form.cleaned_data
-          #   name = data.get("name")
-          #   description = data.get("description")
-          #   date = data.get("date")
-          #   time = data.get("time")
-          #   location = data.get("location")
-          #   category = data.get("category")  
-          #   participants = data.get("participants") or [] 
-
-          #   event = Event.objects.create(
-          #       name=name,
-          #       description=description,
-          #       date=date,
-          #       time=time,
-          #       location=location,
-          #       category=category,  
-          #   )
-          #   event.participants.set(participants)
-          # return HttpResponse("Task added successfully")
 def create_participant(request):
     form = ParticipantForm()
-
     if request.method == "POST":
         form = ParticipantForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'participant_form.html', {"form": form, "message": "Participant added successfully"})
-
+            messages.success(request, "Participant Created Successfully")
+            return redirect('create-participant') 
     return render(request, 'participant_form.html', {"form": form})
 
 def create_category(request):
-    form =CategoryForm()
-
+    form = CategoryForm()
     if request.method == "POST":
         form = CategoryForm(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, 'category_form.html', {"form": form, "message": "Category added successfully"})
-
+            messages.success(request, "Category Created Successfully")
+            return redirect('create-category') 
     return render(request, 'category_form.html', {"form": form})
 
-def show_dashboard(request):
-     return render(request,"dashboard.html")
+def dashboard(request):
+    today = timezone.now().date()
+    event_type = request.GET.get("type", "") 
+    events = Event.objects.select_related('category').prefetch_related('participants').all()    
+    event_counts = events.aggregate(
+        total_events=Count('id'),
+        upcoming_events=Count("id", filter=Q(date=today) | Q(date__gt=today)),
+        past_events=Count('id', filter=Q(date__lt=today)),
+    )
+    participants=Participant.objects.all()
+    event_participants = Event.objects.aggregate(
+        total_participants=Count('participants', distinct=True)
+    )
+    total_participants = Participant.objects.count()
+    if event_type == "total_participants":
+        events = events.filter(date=today)
+    elif event_type == "total_events":
+        events = events.all()
+    elif event_type == "upcoming_events":
+        events = events.filter(date__gte=today)
+    elif event_type == "past_events":
+        events = events.filter(date__lt=today)
+    else:
+        events = events.filter(date=today)
+    
+    context = {
+        'events': events,
+        'participants':participants,
+        'total_participants':total_participants,
+        'event_counts':event_counts,
+        'event_participants':event_participants,
+        
+    }
+    today_events = events.filter(date=today)
+    print("Today's Events:", today_events) 
+    return render(request, "dashboard/dashboard.html", context)
 
 def base(request):
      return render(request,"dashboard/base.html")
 
-def dashboard(request):
-     return render(request,"dashboard/dashboard.html")
+def search(request):
+    total_category = Category.objects.all()
+    query = request.GET.get('q', '')
+    events = Event.objects.all()
+    if query:
+        events = events.filter(
+            Q(name__icontains=query) | 
+            Q(location__icontains=query)
+        ).distinct()
+    for event in events:
+        event.participant_count = event.participants.count() 
+    context = {
+        'events': events,
+        'query': query,
+        'total_category': total_category,
+    } 
+    return render(request, 'dashboard/search_page.html', context)
+
+def update_event(request, id):
+    events = Event.objects.get(id=id)
+    form = EventModelForm(instance=events)
+    if request.method == "POST":
+        form = EventModelForm(request.POST, instance=events)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Event updated Successfully")
+            return redirect('update',id)
+    return render(request, 'event_form.html', {"form": form}) 
+
+
+def delete_event(request,id):
+    if request.method == "POST":
+        events=Event.objects.get(id=id)
+        events.delete()
+        messages.success(request, "Event deleted Successfully")
+        return redirect('dashboard')
+    else:
+        messages.success(request, "Something went wrong")
+        return redirect('dashboard')
+
+def event_page(request,id):
+    event = Event.objects.get(id=id)
+    event_participants = event.participants.all()
+    context = {
+        'event': event,
+        'event_participants': event_participants
+    }
+    return render(request, 'dashboard/event_page.html', context)
+
+

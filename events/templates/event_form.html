@@ -1,18 +1,17 @@
+{% extends "dashboard/base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="{% static "css/output.css" %}">
-</head>
+{% block event_card %}
 <body>
     <div class="w-1/2 mx-auto mt-8">
-        <div>{% if message %}
-            <p>{{message}}</p>
+        <div>
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="px-2 py-1 {% if 'success' in message.tags.split %}bg-green-500{% endif %}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endif %}
-        </div>
+        </div>      
         <form action="" method="POST">
             {% csrf_token %}
             {{form.as_p}}
@@ -22,4 +21,4 @@
         </form>
     </div>
 </body>
-</html>
+{% endblock %}
