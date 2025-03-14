@@ -123,7 +123,6 @@ def update_event(request, id):
             return redirect('update',id)
     return render(request, 'event_form.html', {"form": form}) 
 
-
 def delete_event(request,id):
     if request.method == "POST":
         events=Event.objects.get(id=id)
