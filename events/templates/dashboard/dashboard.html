@@ -66,9 +66,7 @@
         </div>
     {% endfor %}
     </div>
-
-    
-    {% comment %} <p class="text-black font-bold mb-4 mt-4 text-2xl">Participant Details</p>
+    <p class="text-black font-bold mb-4 mt-4 text-2xl">Participant Details</p>
     {% for participant in participants %}<div class="bg-green-200 rounded-xl shadow-2xl">
         <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
             <div>Name</div>
@@ -77,15 +75,18 @@
             <div class="font-medium text-black">{{participant.name}}</div>
     
             <div class="col-span-3 flex justify-end gap-2">
-                <button class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
+                <a href='{%url "update_participant" participant.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
                     Upgrade
-                </button>
-                <button class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition p-3">
+            </a>
+            <form action="{% url 'delete_participant' participant.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition p-3">
                     Delete
                 </button>
+            </form> 
             </div>
         </div>
-    </div>{% endfor %} {% endcomment %}
+    </div>{% endfor %}
 
     {% comment %} <p class="text-black font-bold mb-4 mt-4 text-2xl">Category Details</p>
 

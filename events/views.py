@@ -57,7 +57,7 @@ def dashboard(request):
     )
     total_participants = Participant.objects.count()
     if event_type == "total_participants":
-        events = events.filter(date=today)
+        events = events.filter(date=today)  
     elif event_type == "total_events":
         events = events.all()
     elif event_type == "upcoming_events":
@@ -142,4 +142,23 @@ def event_page(request,id):
     }
     return render(request, 'dashboard/event_page.html', context)
 
+def update_participant(request, id):
+    participant = Participant.objects.get(id=id)
+    form = ParticipantForm(instance=participant)
+    if request.method == "POST":
+        form = ParticipantForm(request.POST, instance=participant)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Participant updated Successfully")
+            return redirect('dashboard')
+    return render(request, 'participant_form.html', {"form": form}) 
 
+def delete_participant(request,id):
+    if request.method == "POST":
+        participant=Participant.objects.get(id=id)
+        participant.delete()
+        messages.success(request, "Participant deleted Successfully")
+        return redirect('dashboard')
+    else:
+        messages.success(request, "Something went wrong")
+        return redirect('dashboard')
