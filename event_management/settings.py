@@ -35,7 +35,6 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -101,16 +100,16 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 # }
 
 # For postgreSQL
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'event_management',
-#         'USER': 'postgres',
-#         'PASSWORD': '2000',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#     }
-# }
+DATABASES = {
+        'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'event_management',
+        'USER': 'postgres',
+        'PASSWORD': '2000',
+        'HOST': 'localhost',
+        'PORT': '5432'
+     }
+}
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
