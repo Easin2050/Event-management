@@ -53,7 +53,7 @@
 {% for event in events %}
 <a href="{% url 'event-page' event.id %}" class="block">
     <div class="bg-white border-2 border-orange-500 shadow-lg rounded-lg overflow-hidden w-full md:w-[80%] flex flex-col md:flex-row gap-4 p-4 mx-auto m-4 transition hover:shadow-xl">
-        <div class="w-full md:w-1/2">
+        <div class="w-full md:w-1/2 h-full">
             <img src="{% static 'images/event-1.jpg' %}" alt="Event Image" class="w-full h-56 md:h-80 object-cover rounded-lg">
         </div>
         <div class="w-full md:w-1/2 flex flex-col justify-between">
@@ -65,31 +65,35 @@
                 </p>
             </div>
             <div class="flex gap-6 mt-4">
-                <div>
-                    <h1 class="text-lg font-bold">Date</h1>
-                    <div class="w-fit h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
-                        <h2 class="text-lg font-bold p-3">{{ event.date }}</h2>
+                <div class="space-y-3">
+                    <div class="flex gap-4">
+                        <div>
+                            <h1 class="text-lg font-bold">Date</h1>
+                            <div class="w-28 h-12 bg-yellow-400 text-black text-lg flex justify-center items-center rounded-md mt-1 shadow-md p-2">
+                                <h2 class="text-md font-semibold">{{ event.date }}</h2>
+                            </div>
+                        </div>
+                        <div>
+                            <h1 class="text-lg font-bold">Time</h1>
+                            <div class="w-28 h-12 bg-yellow-400 text-black text-lg flex justify-center items-center rounded-md mt-1 shadow-md p-2">
+                                <h2 class="text-md font-semibold">{{ event.time }}</h2>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold">Time</h1>
-                    <div class="w-fit h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
-                        <h2 class="text-lg font-bold p-3">{{ event.time }}</h2>
+                    <div>
+                        <h1 class="text-lg font-bold">Location</h1>
+                        <div class="w-60 h-12 bg-yellow-400 text-black text-lg flex justify-center items-center rounded-md mt-1 shadow-md">
+                            <h2 class="text-md font-semibold text-center px-2 truncate">{{ event.location }}</h2>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <h1 class="text-lg font-bold">Location</h1>
-                    <div class="h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1 w-fit">
-                        <h2 class="text-lg font-bold p-3">{{ event.location }}</h2>
-                    </div>
-                </div>
+                </div>                           
             </div>
             <div class="flex gap-6 mt-4">
                 <div>
                     <h1 class="text-lg font-bold">Participants</h1>
                     <div class="w-10 h-12 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
-                        <h2 class="text-4xl font-bold p-3 ">{{event.participant_count}}</h2>
-                    </div>
+                        <h2 class="text-4xl font-bold">{{ event.participant_count }}</h2>
+                    </div>                    
                 </div>
             </div>
         </div>
