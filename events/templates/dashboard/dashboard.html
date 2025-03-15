@@ -67,10 +67,12 @@
     {% endfor %}
     </div>
     <p class="text-black font-bold mb-4 mt-4 text-2xl">Participant Details</p>
-    {% for participant in participants %}<div class="bg-green-200 rounded-xl shadow-2xl">
+
+    <div class="bg-green-200 rounded-xl shadow-2xl">
         <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
             <div>Name</div>
         </div>
+        {% for participant in participants %}
         <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
             <div class="font-medium text-black">{{participant.name}}</div>
     
@@ -86,7 +88,8 @@
             </form> 
             </div>
         </div>
-    </div>{% endfor %}
+        {% endfor %}
+    </div>
 
     {% comment %} <p class="text-black font-bold mb-4 mt-4 text-2xl">Category Details</p>
 
