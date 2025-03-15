@@ -7,9 +7,10 @@ from events.forms import EventModelForm,ParticipantForm,CategoryForm
 from events.models import Event,Participant,Category
 from django.contrib import messages
 from datetime import datetime
+from django.shortcuts import redirect
 
-def home_page(request):
-     return render(request, "dashboard/homepage.html")
+# def home_page(request):
+#      return render(request, "dashboard/homepage.html")
 
 def create_event(request):
     participants = Participant.objects.all()  

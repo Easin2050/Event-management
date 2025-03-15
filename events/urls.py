@@ -1,6 +1,7 @@
 from django.urls import path
 from events.views import event_page,dashboard,create_event,create_participant,create_category,search,update_event,delete_event,update_participant,delete_participant
 urlpatterns = [
+  path('', search, name="home"),
   # path('home-page/',home_page,name="home-page"),
   path('event-page/<int:id>/',event_page,name="event-page"),
   path('create-event/',create_event,name="create-event"),
