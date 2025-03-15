@@ -44,7 +44,7 @@ def create_category(request):
     return render(request, 'category_form.html', {"form": form})
 
 def dashboard(request):
-    today = timezone.now().date()
+    today = timezone.localtime(timezone.now()).date()
     event_type = request.GET.get("type", "") 
     events = Event.objects.select_related('category').prefetch_related('participants').all()    
     event_counts = events.aggregate(
