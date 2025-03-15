@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,7 +28,10 @@ SECRET_KEY = 'django-insecure-nf*uo865b)0kt$00h3v0q0g5slixctxxw200h*utqlz0cyur72
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+
 ALLOWED_HOSTS = ['*']
+
+PORT = os.getenv("PORT", "8000")
 
 CSRF_TRUSTED_ORIGINS = [
     'https://*.onrender.com',
