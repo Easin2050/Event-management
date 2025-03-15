@@ -28,7 +28,11 @@ SECRET_KEY = 'django-insecure-nf*uo865b)0kt$00h3v0q0g5slixctxxw200h*utqlz0cyur72
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-CSRF_TRUSTED_ORIGINS=['https://*.onrender.com','http://127.0.0.1:8000']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'http://127.0.0.1:8000'
+]
 
 
 
@@ -110,13 +114,7 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://event_management_db_h2a9_user:Ue5wcKBt3Du2h3OSLaTiBwQhk4dLRgoV@dpg-cva81ntrie7s73fi8ln0-a.oregon-postgres.render.com/event_management_db_h2a9',
-        conn_max_age=600
-    )
-}
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
