@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Planner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full bg-black/80 backdrop-blur-md shadow-lg z-50">
+        <div class="container mx-auto flex justify-between items-center py-4 px-6">
+            <h1 class="text-2xl font-bold text-orange-500">HARMONI</h1>
+            <ul class="hidden md:flex space-x-6">
+                <li><a href="#" class="hover:text-orange-400">Home</a></li>
+                <li><a href="#" class="hover:text-orange-400">About</a></li>
+                <li><a href="#" class="hover:text-orange-400">Events</a></li>
+                <li><a href="#" class="hover:text-orange-400">Blogs</a></li>
+                <li><a href="#" class="hover:text-orange-400">Gallery</a></li>
+                <li><a href="#" class="hover:text-orange-400">Speaker</a></li>
+                <li><a href="#" class="hover:text-orange-400">Contact</a></li>
+            </ul>
+            <button class="md:hidden text-orange-400 text-2xl">&#9776;</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-screen flex items-center justify-center text-center bg-cover bg-no-repeat bg-center" style="background-image: url('https://source.unsplash.com/1600x900/?event,lights');">
+        <div class="absolute inset-0 bg-black/50"></div>
+        <div class="relative z-10">
+            <h1 class="text-5xl font-extrabold">
+                One Stop <br> <span class="text-orange-400">Event Planner</span>
+            </h1>
+            <p class="mt-4 text-gray-300 uppercase tracking-wide">Every event should be perfect</p>
+            <div class="mt-6 space-x-4">
+                <a href="#" class="bg-orange-500 text-white px-6 py-3 rounded-lg shadow-lg hover:bg-orange-600 transition">About Us</a>
+                <a href="#" class="border-2 border-orange-400 text-orange-400 px-6 py-3 rounded-lg hover:bg-orange-400 hover:text-black transition">Get Started!</a>
+            </div>
+        </div>
+    </section>
+    <h1>Welcome home</h1>
+    {% if user.is_authenticated %}
+        {{user}}
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <button type="submit">logout</button>
+        </form>
+    {% else %}
+        Annonymous
+    {% endif %}
+</body>
+</html>

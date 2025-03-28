@@ -1,38 +1,69 @@
 from django import forms
-from events.models import Category,Participant,Event
+from events.models import Category, Participant, Event
 from django.core.exceptions import ValidationError
 from datetime import date
 
-class EventModelForm(forms.ModelForm):
+
+class StyledFormMixin:
+    """Mixin to apply consistent styling to form fields"""
+
+    default_classes = "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2 focus:outline-none focus:border-rose-500 focus:ring-rose-500"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.apply_styled_widgets()
+
+    def apply_styled_widgets(self):
+        for field_name, field in self.fields.items():
+            if isinstance(field.widget, forms.TextInput):
+                field.widget.attrs.update({
+                    'class': self.default_classes,
+                    'placeholder': f"Enter {field.label.lower()}"
+                })
+            elif isinstance(field.widget, forms.Textarea):
+                field.widget.attrs.update({
+                    'class': f"{self.default_classes} resize-none",
+                    'placeholder': f"Enter {field.label.lower()}",
+                    'rows': 4
+                })
+            elif isinstance(field.widget, forms.SelectDateWidget):
+                field.widget.attrs.update({
+                    "class": f"{self.default_classes} bg-green-500"
+                })
+            elif isinstance(field.widget, forms.TimeInput):
+                field.widget.attrs.update({
+                    "class": self.default_classes,
+                    "type": "time"
+                })
+            elif isinstance(field.widget, forms.Select):
+                field.widget.attrs.update({
+                    "class": self.default_classes
+                })
+            elif isinstance(field.widget, forms.EmailInput):
+                field.widget.attrs.update({
+                    "class": self.default_classes,
+                    "type": "email",
+                    "placeholder": f"Enter {field.label.lower()}"
+                })
+            elif isinstance(field.widget, forms.CheckboxSelectMultiple):
+                field.widget.attrs.update({
+                    "class": "space-y-2"
+                })
+            else:
+                field.widget.attrs.update({
+                    "class": self.default_classes
+                })
+
+
+class EventModelForm(StyledFormMixin, forms.ModelForm):
+
     class Meta:
         model = Event
         fields = ['name', 'description', 'date', 'time', 'location', 'category', 'participants']
         widgets = {
-            'name': forms.TextInput(attrs={
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2",
-                'placeholder': "Enter Event Name"
-            }),
-            'description': forms.Textarea(attrs={
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2",
-                'placeholder': "Write a short event description",
-            }),
-            'date': forms.SelectDateWidget(attrs={
-                'class': "border-2 border-gray-300 rounded-lg shadow-sm p-2 bg-green-500"
-            }),
-            'time': forms.TimeInput(attrs={
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2",
-                'type': 'time'
-            }),
-            'location': forms.TextInput(attrs={
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2",
-                'placeholder': "Enter Event Location"
-            }),
-            'category': forms.Select(attrs={
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2"
-            }),
-            'participants': forms.CheckboxSelectMultiple(attrs={  
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2"
-            })
+            'date': forms.SelectDateWidget(),
+            'time': forms.TimeInput(attrs={'type': 'time'}),
+            'participants': forms.CheckboxSelectMultiple()
         }
 
     def clean_date(self):
@@ -43,40 +74,22 @@ class EventModelForm(forms.ModelForm):
             raise ValidationError("Invalid date format.")
         if event_date < date.today():
             raise ValidationError("You cannot create an event with a past date.")
-        return event_date 
+        return event_date
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['category'].empty_label = "Select Category"
-    
-class ParticipantForm(forms.ModelForm):
+
+
+class ParticipantForm(StyledFormMixin, forms.ModelForm):
+
     class Meta:
         model = Participant
         fields = ['name', 'email']
-        widgets = {
-            'name': forms.TextInput(attrs={
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2",
-                'placeholder': "Enter Participant Name"  
-            }),
-            'email': forms.EmailInput(attrs={
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2",
-                'placeholder': "Enter Email Here",
-                'type': 'email' 
-            })
-        }
 
-class CategoryForm(forms.ModelForm):
+
+class CategoryForm(StyledFormMixin, forms.ModelForm):
+
     class Meta:
         model = Category
         fields = ['name', 'description']
-        widgets = {
-            'name': forms.TextInput(attrs={
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2",
-                'placeholder': "Enter Category Name"  
-            }),
-            'description': forms.Textarea(attrs={
-                'class': "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2",
-                'placeholder': "Write a short category description",
-                'rows': 4 
-            })
-        }
