@@ -7,10 +7,22 @@ from events.forms import EventModelForm,ParticipantForm,CategoryForm
 from events.models import Event,Participant,Category
 from django.contrib import messages
 from datetime import datetime
+from django.contrib.auth.decorators import permission_required,user_passes_test,login_required
+
+def is_organizer(user):
+    return user.groups.filter(name='Organizer').exists()
+
+def is_admin(user):
+    return user.groups.filter(name='Admin').exists()
+
+def is_admin_or_organizer(user):
+    return is_admin(user) or is_organizer(user)
 
 def home_page(request):
      return render(request, "dashboard/homepage.html")
 
+@login_required
+@permission_required('events.add_event',login_url='no-permission')
 def create_event(request):
     participants = Participant.objects.all()  
     form = EventModelForm()
@@ -22,6 +34,8 @@ def create_event(request):
             return redirect('create-event')
     return render(request, 'event_form.html', {"form": form})
 
+@login_required
+@permission_required('events.add_perticipant',login_url='no-permission')
 def create_participant(request):
     form = ParticipantForm()
     if request.method == "POST":
@@ -32,6 +46,8 @@ def create_participant(request):
             return redirect('create-participant') 
     return render(request, 'participant_form.html', {"form": form})
 
+@login_required
+@permission_required('events.add_category',login_url='no-permission')
 def create_category(request):
     form = CategoryForm()
     if request.method == "POST":
@@ -42,6 +58,9 @@ def create_category(request):
             return redirect('create-category') 
     return render(request, 'category_form.html', {"form": form})
 
+@login_required
+@user_passes_test(is_admin_or_organizer, login_url='no-permission')
+@permission_required('events.show_dashboard', login_url='no-permission')
 def dashboard(request):
     today = timezone.now().date()
     event_type = request.GET.get("type", "") 
@@ -112,6 +131,8 @@ def search(request):
     } 
     return render(request, 'dashboard/search_page.html', context)
 
+@login_required
+@permission_required('events.change_event',login_url='no-permission')
 def update_event(request, id):
     events = Event.objects.get(id=id)
     form = EventModelForm(instance=events)
@@ -123,6 +144,8 @@ def update_event(request, id):
             return redirect('update',id)
     return render(request, 'event_form.html', {"form": form}) 
 
+@login_required
+@permission_required('events.delete_event',login_url='no-permission')
 def delete_event(request,id):
     if request.method == "POST":
         events=Event.objects.get(id=id)
@@ -133,6 +156,7 @@ def delete_event(request,id):
         messages.success(request, "Something went wrong")
         return redirect('dashboard')
 
+
 def event_page(request,id):
     event = Event.objects.get(id=id)
     event_participants = event.participants.all()
@@ -142,6 +166,8 @@ def event_page(request,id):
     }
     return render(request, 'dashboard/event_page.html', context)
 
+@login_required
+@permission_required('events.add_perticipant',login_url='no-permission')
 def update_participant(request, id):
     participant = Participant.objects.get(id=id)
     form = ParticipantForm(instance=participant)
@@ -153,6 +179,8 @@ def update_participant(request, id):
             return redirect('dashboard')
     return render(request, 'participant_form.html', {"form": form}) 
 
+@login_required
+@permission_required('events.delete_perticipant',login_url='no-permission')
 def delete_participant(request,id):
     if request.method == "POST":
         participant=Participant.objects.get(id=id)
