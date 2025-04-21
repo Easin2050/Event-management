@@ -84,7 +84,7 @@ class AssignRoleForm(StyledFormMixin, forms.Form):
         empty_label="Select a Role"
     )
     
-class CreateGroupForm(StyledFormMixin, forms.ModelForm):
+class CreateGroupForm(forms.ModelForm):
     permissions = forms.ModelMultipleChoiceField(
         queryset=Permission.objects.all(),
         widget=forms.CheckboxSelectMultiple,

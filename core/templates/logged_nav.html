@@ -1,0 +1,30 @@
+<nav class="bg-black shadow-md">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <a href="{% url 'search' %}" class="text-3xl font-bold text-orange-500">EVENTMATE</a>
+            <!-- Mobile Menu Button -->
+            <input type="checkbox" id="menu-toggle" class="hidden peer">
+            <label for="menu-toggle" class="md:hidden bg-black p-2 border border-orange-400 rounded-lg cursor-pointer hover:bg-orange-500">
+                <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </label>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-6">
+                <a href="{% url "dashboard" %}" class="font-medium hover:text-orange-400 text-white text-lg">Dashboard</a>
+                <a href="{% url "create-event" %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Event</a>
+                <a href="{% url "create-category" %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Category</a>
+                <a href="{% url "create-participant" %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Participant</a>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="mobile-menu hidden peer-checked:flex flex-col md:hidden bg-black shadow-md space-y-2 p-4">
+            <a href="{% url "dashboard" %}" class="block py-2 px-4 text-white hover:bg-orange-400">Dashboard</a>
+            <a href="{% url "create-event" %}" class="block py-2 px-4 text-white hover:bg-orange-400">Create Event</a>
+            <a href="{% url "create-category" %}" class="block py-2 px-4 text-white hover:bg-orange-400">Create Category</a>
+            <a href="{% url "create-participant" %}" class="block py-2 px-4 text-white hover:bg-orange-400">Create Participant</a>
+        </div>
+        
+    </div>
+</nav>

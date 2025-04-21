@@ -4,51 +4,50 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Taskify</title>
+    <title>EVENTMATE</title>
     <link rel="stylesheet" href="{% static 'css/output.css' %}" />
   </head>
   <body>
-    <header class="bg-white shadow-md">
-      <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+    <header class="bg-black shadow-md">
+      <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16 relative">
         <!-- Logo -->
-        <a href="index.html" class="text-2xl font-bold text-gray-800">Taskify</a>
-
+        <a href="{% url 'search' %}" class="text-3xl font-bold text-orange-500">EVENTMATE</a>
         <!-- Desktop Menu -->
         <div class="hidden md:flex space-x-6">
-          <a href="{% url 'admin-dashboard' %}" class="nav-link">Dashboard</a>
-          <a href="#" class="nav-link">Tasks</a>
-          <a href="{% url 'group-list' %}" class="nav-link">Groups</a>
-          <a href="{% url 'create-group' %}" class="nav-link">Create Group</a>
+          <a href="{% url 'admin-dashboard' %}" class="font-medium hover:text-orange-400 text-white text-lg">Dashboard</a>
+          <a href="{% url 'search' %}" class="font-medium hover:text-orange-400 text-white text-lg">Events</a>
+          <a href="{% url 'group-list' %}" class="font-medium hover:text-orange-400 text-white text-lg">Groups</a>
+          <a href="{% url 'create-group' %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Group</a>
         </div>
 
         <!-- User Menu -->
-        <div class="relative">
+        <div class="relative ml-4">
           <button id="user-menu-button" class="flex items-center focus:outline-none">
-            <img class="h-8 w-8 rounded-full object-cover" src="https://placekitten.com/100/100" alt="User avatar" />
+            <img class="h-8 w-8 rounded-full object-cover border-2 border-orange-400" src="https://placekitten.com/100/100" alt="User avatar" />
           </button>
-          <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 hidden">
-            <a href="{% url 'admin-dashboard' %}" class="dropdown-item">Dashboard</a>
+          <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg py-2 hidden">
+            <a href="{% url 'admin-dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Dashboard</a>
             <form method="post" action="{% url 'logout' %}">
               {% csrf_token %}
-              <button class="dropdown-item w-full text-left">Logout</button>
+              <button class="w-full text-left px-4 py-2 text-white hover:bg-orange-400">Logout</button>
             </form>
           </div>
         </div>
 
         <!-- Mobile Menu Button -->
-        <button id="menu-toggle" class="md:hidden focus:outline-none">
-          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <button id="menu-toggle" class="md:hidden bg-black p-2 border border-orange-400 rounded-lg hover:bg-orange-500 ml-4 focus:outline-none">
+          <svg class="h-6 w-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
       </nav>
 
       <!-- Mobile Menu -->
-      <div id="mobile-menu" class="md:hidden hidden bg-white shadow-md">
-        <a href="{% url 'admin-dashboard' %}" class="mobile-nav-link">Dashboard</a>
-        <a href="#" class="mobile-nav-link">Tasks</a>
-        <a href="{% url 'group-list' %}" class="mobile-nav-link">Groups</a>
-        <a href="{% url 'create-group' %}" class="mobile-nav-link">Create Group</a>
+      <div id="mobile-menu" class="hidden md:hidden bg-black shadow-md space-y-2 p-4">
+        <a href="{% url 'admin-dashboard' %}" class="block py-2 px-4 text-white hover:bg-orange-400">Dashboard</a>
+        <a href="#" class="block py-2 px-4 text-white hover:bg-orange-400">Tasks</a>
+        <a href="{% url 'group-list' %}" class="block py-2 px-4 text-white hover:bg-orange-400">Groups</a>
+        <a href="{% url 'create-group' %}" class="block py-2 px-4 text-white hover:bg-orange-400">Create Group</a>
       </div>
     </header>
 
@@ -63,7 +62,8 @@
         document.getElementById("mobile-menu").classList.toggle("hidden");
       });
 
-      document.getElementById("user-menu-button").addEventListener("click", function () {
+      document.getElementById("user-menu-button").addEventListener("click", function (e) {
+        e.stopPropagation();
         document.getElementById("user-menu").classList.toggle("hidden");
       });
 
@@ -75,3 +75,44 @@
     </script>
   </body>
 </html>
+<footer class="bg-black shadow-md w-full">
+  <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
+    <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-8">
+    
+      <div>
+        <h1 class="text-3xl font-extrabold text-orange-500">EVENTMATE</h1>
+        <ul class="mt-4 space-y-1 text-sm text-white">
+          <li><a href="#" class="hover:underline">About</a></li>
+          <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+          <li><a href="#" class="hover:underline">Licensing</a></li>
+          <li><a href="#" class="hover:underline">Contact</a></li>
+        </ul>
+      </div>
+    
+      <div class="mx-auto md:w-1/3 ms-8">
+        <h4 class="text-lg font-semibold mb-4 text-white">Newsletter</h4>
+        <form class="flex">
+          <input
+            type="email"
+            placeholder="Your email"
+            class="w-full px-5 py-3 text-gray-800 bg-gray-200 rounded-l-md focus:outline-none"
+            required
+          />
+          <button
+            type="submit"
+            class="bg-orange-500 text-white px-4 py-2 rounded-r-md hover:bg-orange-600 transition"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
+
+    </div>
+
+    <hr class="my-6 border-gray-700" />
+
+    <span class="block text-sm text-white text-center">
+      © 2025 <a href="#" class="hover:underline">Easin</a>. All Rights Reserved.
+    </span>
+  </div>
+</footer>

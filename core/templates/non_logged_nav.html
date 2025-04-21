@@ -1,0 +1,57 @@
+<nav class="fixed top-0 w-full bg-black z-50 shadow-lg">
+    <div class="max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
+      <h1 class="text-2xl font-bold text-orange-500">EVENTMATE</h1>
+      <div class="md:hidden">
+        <button id="mobileMenuBtn" class="text-orange-400 text-2xl">&#9776;</button>
+      </div>
+      <ul class="hidden md:flex space-x-6 text-base font-medium items-center text-white">
+        <li><a href="#" class="hover:text-orange-400">Home</a></li>
+        <li><a href="#" class="hover:text-orange-400">About</a></li>
+        <li><a href="#" class="hover:text-orange-400">Events</a></li>
+        <li><a href="#" class="hover:text-orange-400">Gallery</a></li>
+        <li>
+          <a href="{% url 'sign-in' %}" class="border border-orange-400 text-orange-400 px-4 py-2 rounded-full hover:bg-orange-400 hover:text-black transition">Sign In</a>
+        </li>
+        <li>
+          <a href="{% url 'sign-up' %}" class="border border-orange-400 text-orange-400 px-4 py-2 rounded-full hover:bg-orange-400 hover:text-black transition">Sign Up</a>
+        </li>
+      </ul>
+    </div>
+  
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="md:hidden hidden px-4 pb-6 bg-black">
+      <ul class="space-y-3 text-base text-white">
+        <li><a href="#" class="block hover:text-orange-400">Home</a></li>
+        <li><a href="#" class="block hover:text-orange-400">About</a></li>
+        <li><a href="#" class="block hover:text-orange-400">Events</a></li>
+        <li><a href="#" class="block hover:text-orange-400">Gallery</a></li>
+      </ul>
+      <div class="flex justify-center gap-4 mt-6">
+        <a href="{% url 'sign-in' %}" class="border border-orange-400 text-orange-400 px-4 py-2 rounded-full text-center hover:bg-orange-400 hover:text-black transition w-32">
+          Sign In
+        </a>
+        <a href="{% url 'sign-up' %}" class="border border-orange-400 text-orange-400 px-4 py-2 rounded-full text-center hover:bg-orange-400 hover:text-black transition w-32">
+          Sign Up
+        </a>
+      </div>
+    </div>
+  </nav>
+  
+  <script>
+    const menuBtn = document.getElementById("mobileMenuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+  
+    menuBtn?.addEventListener("click", (e) => {
+      e.stopPropagation();
+      mobileMenu.classList.toggle("hidden");
+    });
+  
+    mobileMenu?.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+  
+    window.addEventListener("click", () => {
+      mobileMenu.classList.add("hidden");
+    });
+  </script>
+  

@@ -1,15 +1,15 @@
 {% extends "admin/admin_dashboard.html" %}
 {% block content %}
-      <div class='w-2/3 mx-auto my-8'>
-            <h2 class="text-2xl font-bold mb-4">Groups and Permissions</h2>
+      <div class='w-2/3 mx-auto my-8 mb-6'>
+            <h2 class="text-2xl font-bold m-4">Groups and Permissions</h2>
         <div class="overflow-x-auto">
             <table class="table-auto w-full border-collapse border border-gray-300">
-            <thead>
-                <tr class="bg-gray-100">
-                <th class="border border-gray-300 px-4 py-2">Group Name</th>
-                <th class="border border-gray-300 px-4 py-2">Permissions</th>
-                </tr>
-            </thead>
+                <thead class="bg-orange-500 text-white">
+                    <tr>
+                      <th class="w-1/12 px-4 sm:px-6 py-3 text-left font-semibold uppercase">Group name</th>
+                      <th class="w-2/12 px-4 sm:px-6 py-3 text-left font-semibold uppercase">Permissions</th>
+                    </tr>
+                  </thead>         
             <tbody>
             {% for group in groups %}
                     <tr class="odd:bg-white even:bg-gray-50">
@@ -19,7 +19,8 @@
                     <td class="border border-gray-300 px-4 py-2">
                         <ul class="list-disc list-inside">
                             {% for permission in group.permissions.all %}
-                                <li>{{permission.name}}|{{permission.codename}}</li>
+                                {% comment %} <li>{{permission.name}}|{{permission.codename}}</li> {% endcomment %}
+                                <li>{{permission.name}}</li>
                             {% empty %}
                                 <span class="text-gray-500 italic">No permissions assigned</span>
                             {% endfor %}
@@ -27,7 +28,6 @@
                     </td>
                     </tr>
                 {% endfor %}
-                
             </tbody>
             </table>
         </div>
