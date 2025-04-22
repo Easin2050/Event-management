@@ -12,45 +12,46 @@
       <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16 relative">
         <!-- Logo -->
         <a href="{% url 'search' %}" class="text-3xl font-bold text-orange-500">EVENTMATE</a>
-        <!-- Desktop Menu -->
+    
+        <!-- Desktop links -->
         <div class="hidden md:flex space-x-6">
           <a href="{% url 'admin-dashboard' %}" class="font-medium hover:text-orange-400 text-white text-lg">Dashboard</a>
           <a href="{% url 'search' %}" class="font-medium hover:text-orange-400 text-white text-lg">Events</a>
           <a href="{% url 'group-list' %}" class="font-medium hover:text-orange-400 text-white text-lg">Groups</a>
           <a href="{% url 'create-group' %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Group</a>
         </div>
-
-        <!-- User Menu -->
-        <div class="relative ml-4">
+    
+        <!-- Avatar dropdown toggle (shifted right) -->
+        <div class="relative ml-6">
           <button id="user-menu-button" class="flex items-center focus:outline-none">
-            <img class="h-8 w-8 rounded-full object-cover border-2 border-orange-400" src="https://placekitten.com/100/100" alt="User avatar" />
+            <img
+              class="h-8 w-8 rounded-full object-cover border-2 border-white"
+              src="{% static 'images/avater.png' %}"
+              alt="User avatar"
+            />
           </button>
-          <div id="user-menu" class="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg py-2 hidden">
+    
+          <!-- Combined dropdown for both mobile & desktop -->
+          <div id="user-menu"
+               class="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg py-2 hidden z-50">
+            <!-- User links for all screen sizes -->
             <a href="{% url 'admin-dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Dashboard</a>
+            <a href="{% url 'search' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Events</a>
+            <a href="{% url 'group-list' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Groups</a>
+            <a href="{% url 'create-group' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Group</a>
+    
+            <!-- Logout -->
             <form method="post" action="{% url 'logout' %}">
               {% csrf_token %}
-              <button class="w-full text-left px-4 py-2 text-white hover:bg-orange-400">Logout</button>
+              <button type="submit" class="w-full text-left px-4 py-2 text-white hover:bg-orange-400">
+                Logout
+              </button>
             </form>
           </div>
         </div>
-
-        <!-- Mobile Menu Button -->
-        <button id="menu-toggle" class="md:hidden bg-black p-2 border border-orange-400 rounded-lg hover:bg-orange-500 ml-4 focus:outline-none">
-          <svg class="h-6 w-6 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-          </svg>
-        </button>
       </nav>
-
-      <!-- Mobile Menu -->
-      <div id="mobile-menu" class="hidden md:hidden bg-black shadow-md space-y-2 p-4">
-        <a href="{% url 'admin-dashboard' %}" class="block py-2 px-4 text-white hover:bg-orange-400">Dashboard</a>
-        <a href="#" class="block py-2 px-4 text-white hover:bg-orange-400">Tasks</a>
-        <a href="{% url 'group-list' %}" class="block py-2 px-4 text-white hover:bg-orange-400">Groups</a>
-        <a href="{% url 'create-group' %}" class="block py-2 px-4 text-white hover:bg-orange-400">Create Group</a>
-      </div>
     </header>
-
+    
     <main>
       {% block content %}
         {% include "admin/user_list.html" %}
@@ -58,23 +59,21 @@
     </main>
 
     <script>
-      document.getElementById("menu-toggle").addEventListener("click", function () {
-        document.getElementById("mobile-menu").classList.toggle("hidden");
-      });
-
-      document.getElementById("user-menu-button").addEventListener("click", function (e) {
-        e.stopPropagation();
-        document.getElementById("user-menu").classList.toggle("hidden");
-      });
-
-      window.addEventListener("click", function (e) {
-        if (!document.getElementById("user-menu-button").contains(e.target)) {
-          document.getElementById("user-menu").classList.add("hidden");
+      // Toggle the dropdown
+      const btn = document.getElementById('user-menu-button');
+      const menu = document.getElementById('user-menu');
+      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+    
+      // Close if you click outside
+      document.addEventListener('click', e => {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+          menu.classList.add('hidden');
         }
       });
     </script>
   </body>
 </html>
+
 <footer class="bg-black shadow-md w-full">
   <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
     <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-8">
