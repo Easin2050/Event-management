@@ -10,10 +10,8 @@
   <body>
     <header class="bg-black shadow-md">
       <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16 relative">
-        <!-- Logo -->
         <a href="{% url 'search' %}" class="text-3xl font-bold text-orange-500">EVENTMATE</a>
     
-        <!-- Desktop links -->
         <div class="hidden md:flex space-x-6">
           <a href="{% url 'admin-dashboard' %}" class="font-medium hover:text-orange-400 text-white text-lg">Dashboard</a>
           <a href="{% url 'search' %}" class="font-medium hover:text-orange-400 text-white text-lg">Events</a>
@@ -21,26 +19,24 @@
           <a href="{% url 'create-group' %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Group</a>
         </div>
     
-        <!-- Avatar dropdown toggle (shifted right) -->
         <div class="relative ml-6">
-          <button id="user-menu-button" class="flex items-center focus:outline-none">
+          <button id="user-menu-button" class="flex items-center focus:outline-none space-x-2">
             <img
               class="h-8 w-8 rounded-full object-cover border-2 border-white"
               src="{% static 'images/avater.png' %}"
               alt="User avatar"
             />
+            <h1 class="p-2 text-white">{{user.username}}</h1>
           </button>
-    
-          <!-- Combined dropdown for both mobile & desktop -->
+                
+          
           <div id="user-menu"
                class="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg py-2 hidden z-50">
-            <!-- User links for all screen sizes -->
             <a href="{% url 'admin-dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Dashboard</a>
             <a href="{% url 'search' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Events</a>
             <a href="{% url 'group-list' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Groups</a>
             <a href="{% url 'create-group' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Group</a>
     
-            <!-- Logout -->
             <form method="post" action="{% url 'logout' %}">
               {% csrf_token %}
               <button type="submit" class="w-full text-left px-4 py-2 text-white hover:bg-orange-400">
@@ -59,12 +55,10 @@
     </main>
 
     <script>
-      // Toggle the dropdown
       const btn = document.getElementById('user-menu-button');
       const menu = document.getElementById('user-menu');
       btn.addEventListener('click', () => menu.classList.toggle('hidden'));
     
-      // Close if you click outside
       document.addEventListener('click', e => {
         if (!btn.contains(e.target) && !menu.contains(e.target)) {
           menu.classList.add('hidden');
