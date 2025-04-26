@@ -1,6 +1,7 @@
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User,Group
+from events.models import RSVP
 from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 from django.core.mail import send_mail
@@ -28,3 +29,24 @@ def assign_role(sender, instance, created, **kwargs):
         user_group, created = Group.objects.get_or_create(name='User')
         instance.groups.add(user_group)
         instance.save()
+
+
+@receiver(post_save, sender=RSVP)
+def send_rsvp_confirmation_email(sender, instance, created, **kwargs):
+    if created:
+        user = instance.user
+        event = instance.event
+        if user.email:
+            send_mail(
+                subject="RSVP Confirmation",
+                message=(
+                    f"Hi {user.first_name},\n\n"
+                    f"You've successfully RSVPed to the event: {event.name}!\n\n"
+                    f"Event Date: {event.date}\n"
+                    f"Location: {event.location}\n\n"
+                    f"Thanks for responding!"
+                ),
+                from_email="easin21562050@gmail.com", 
+                recipient_list=[user.email],
+                fail_silently=False
+            )

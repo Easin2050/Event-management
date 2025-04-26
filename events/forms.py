@@ -1,7 +1,9 @@
 from django import forms
-from events.models import Category, Participant, Event
+from events.models import Category,Event
 from django.core.exceptions import ValidationError
 from datetime import date
+from django.contrib.auth.models import User
+
 
 
 class StyledFormMixin:
@@ -82,11 +84,15 @@ class EventModelForm(StyledFormMixin, forms.ModelForm):
 
 
 class ParticipantForm(StyledFormMixin, forms.ModelForm):
-
     class Meta:
-        model = Participant
-        fields = ['name', 'email']
+        model = User
+        fields = ['first_name', 'last_name', 'email']
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if User.objects.filter(email=email).exists():
+            raise ValidationError("A user with this email already exists.")
+        return email
 
 class CategoryForm(StyledFormMixin, forms.ModelForm):
 

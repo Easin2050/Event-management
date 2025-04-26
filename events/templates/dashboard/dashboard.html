@@ -48,7 +48,9 @@
 
         {% for event in events %}
         <div class="grid grid-cols-4 p-4 border-b border-white text-base text-gray-900 items-center">
-            <div class="font-medium text-black">{{ event.name }}</div>
+            <div class="font-medium text-black">
+                <a href="?event_id={{ event.id }}" class="text-blue-700 underline">{{ event.name }}</a>
+            </div>
             <div class="text-black">{{ event.date }}</div>
             <div class="text-black">{{ event.time }}</div>
             <div class="text-black">{{ event.location }}</div>
@@ -67,16 +69,17 @@
     {% endfor %}
     </div>
     <p class="text-black font-bold mb-4 mt-4 text-2xl">Participant Details</p>
-    {% for participant in participants %}<div class="bg-green-200 rounded-xl shadow-2xl">
-        <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
-            <div>Name</div>
-        </div>
-        <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
-            <div class="font-medium text-black">{{participant.name}}</div>
-    
-            <div class="col-span-3 flex justify-end gap-2">
-                <a href='{%url "update_participant" participant.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
-                    Upgrade
+{% for participant in participant_users %}
+<div class="bg-green-200 rounded-xl shadow-2xl mb-4">
+    <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
+        <div>Name</div>
+    </div>
+    <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
+        <div class="font-medium text-black">{{ participant.username }}</div>
+
+        <div class="col-span-3 flex justify-end gap-2">
+            <a href='{% url "update_participant" participant.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
+                Upgrade
             </a>
             <form action="{% url 'delete_participant' participant.id %}" method="POST">
                 {% csrf_token %}
@@ -84,9 +87,10 @@
                     Delete
                 </button>
             </form> 
-            </div>
         </div>
-    </div>{% endfor %}
+    </div>
+</div>
+{% endfor %}
 
     {% comment %} <p class="text-black font-bold mb-4 mt-4 text-2xl">Category Details</p>
 
