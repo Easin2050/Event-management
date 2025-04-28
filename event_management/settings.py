@@ -11,13 +11,8 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-<<<<<<< HEAD
 import dj_database_url
-
-
-=======
 from decouple import config
->>>>>>> assignment-2
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -108,18 +103,7 @@ WSGI_APPLICATION = 'event_management.wsgi.application'
 # }
 
 # For postgreSQL
-<<<<<<< HEAD
-# DATABASES = {
-#      'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'event_management',
-#         'USER': 'postgres',
-#         'PASSWORD': '2000',
-#         'HOST': 'localhost',
-#         'PORT': '5432'
-#      }
-# }
-=======
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -130,7 +114,6 @@ DATABASES = {
         'PORT': config('DB_PORT', cast=int)
     }
 }
->>>>>>> assignment-2
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
