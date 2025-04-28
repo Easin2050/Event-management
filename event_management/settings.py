@@ -117,12 +117,14 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
+# Database documentation https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+
 DATABASES = {
-     'default': dj_database_url.config(
-         # Replace this value with your local database's connection string.
-         default='postgresql://event_management_db_726y_user:sQ8mBCOvvxbBJJz1fkZ1yflcrZylTFCx@dpg-cvanskan91rc739885t0-a.oregon-postgres.render.com/event_management_db_726y',
-         conn_max_age=600
-     )
+    'default': dj_database_url.config(
+        # Replace this value with your local database's connection string.
+        default='postgresql://event_management_db_hhmh_user:cI9GyXaatWxWUe1UIJ3Oy7TDzbIPNzdw@dpg-d07q8bmr433s73bheusg-a.oregon-postgres.render.com/event_management_db_hhmh',
+        conn_max_age=600
+    )
 }
 
 AUTH_PASSWORD_VALIDATORS = [
