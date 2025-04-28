@@ -5,10 +5,22 @@ from django.utils import timezone
 from django.contrib import messages
 from django.contrib.auth.decorators import permission_required, user_passes_test, login_required
 from datetime import datetime
-from django.shortcuts import redirect
+from events.forms import EventModelForm, ParticipantForm, CategoryForm
+from events.models import Event,Category,RSVP
+from django.contrib.auth.models import User
 
-# def home_page(request):
-#      return render(request, "dashboard/homepage.html")
+
+def is_organizer(user):
+    return user.groups.filter(name='Organizer').exists()
+
+def is_admin(user):
+    return user.groups.filter(name='Admin').exists()
+
+def is_admin_or_organizer(user):
+    return is_admin(user) or is_organizer(user)
+
+def home_page(request):
+    return render(request, "dashboard/homepage.html")
 
 @login_required
 @permission_required('events.add_event', login_url='no-permission')
@@ -50,9 +62,12 @@ def create_category(request):
 @login_required
 @user_passes_test(is_admin_or_organizer, login_url='no-permission')
 def dashboard(request):
-    today = timezone.localtime(timezone.now()).date()
-    event_type = request.GET.get("type", "") 
-    events = Event.objects.select_related('category').prefetch_related('participants').all()    
+    today = timezone.now().date()
+    event_type = request.GET.get("type", "")
+    selected_event_id = request.GET.get("event_id")
+
+    events = Event.objects.select_related('category').prefetch_related('participants').all()
+
     event_counts = events.aggregate(
         total_events=Count('id'),
         upcoming_events=Count("id", filter=Q(date=today) | Q(date__gt=today)),
