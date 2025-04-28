@@ -1,0 +1,43 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+  <div class="w-full max-w-7xl bg-white shadow-xl rounded-lg overflow-hidden">
+    <div class="w-full overflow-x-auto">
+      <table class="min-w-[900px] w-full table-fixed text-xs sm:text-sm">
+        <thead class="bg-orange-500 text-white">
+          <tr>
+            <th class="w-1/12 px-4 sm:px-6 py-3 text-left font-semibold uppercase">Number</th>
+            <th class="w-2/12 px-4 sm:px-6 py-3 text-left font-semibold uppercase">Username</th>
+            <th class="w-2/12 px-4 sm:px-6 py-3 text-left font-semibold uppercase">Name</th>
+            <th class="w-3/12 px-4 sm:px-6 py-3 text-left font-semibold uppercase">Email</th>
+            <th class="w-1/12 px-4 sm:px-6 py-3 text-left font-semibold uppercase">User ID</th>
+            <th class="w-2/12 px-4 sm:px-6 py-3 text-left font-semibold uppercase">Current Role</th>
+            <th class="w-2/12 px-4 sm:px-6 py-3 text-left font-semibold uppercase">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white">
+          {% for user in users %}
+            <tr class="hover:bg-gray-100 border-b-2 border-orange-500 transition-colors duration-300">
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ forloop.counter }}</td>
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.username }} {{ user.last_name }}</td>
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.first_name }} {{ user.last_name }}</td>
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.email }}</td>
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.id }}</td>
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.group_name }}</td>
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap">
+                <a
+                  href="{% url 'assign-role' user.id %}"
+                  class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-3 sm:px-4 rounded-lg text-xs sm:text-sm transition duration-300"
+                >
+                  Change Role
+                </a>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+{% comment %} <QuerySet ['Manager']> {% endcomment %}
+  

@@ -1,0 +1,54 @@
+{% load static %}
+<header class="bg-black shadow-md">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16 relative">
+      <a href="{% url 'search' %}" class="text-3xl font-bold text-orange-500">EVENTMATE</a>
+
+      <div class="hidden md:flex space-x-6">
+        <a href="{% url 'dashboard' %}" class="font-medium hover:text-orange-400 text-white text-lg">Dashboard</a>
+        <a href="{% url 'create-event' %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Event</a>
+        <a href="{% url 'create-category' %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Category</a>
+        <a href="{% url 'create-participant' %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Participant</a>
+      </div>
+
+      {% if user.is_authenticated %}
+      <div class="relative ml-6">
+        <button id="user-menu-button" class="flex items-center focus:outline-none space-x-2">
+          <img
+            class="h-8 w-8 rounded-full object-cover border-2 border-white"
+            src="{% static 'images/avater.png' %}"
+            alt="User avatar"
+          />
+          <h1 class="p-2 text-white">{{ user.username }}</h1>
+        </button>
+
+        <div id="user-menu"
+             class="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg py-2 hidden z-50">
+          <a href="{% url 'dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Dashboard</a>
+          <a href="{% url 'create-event' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Event</a>
+          <a href="{% url 'create-category' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Category</a>
+          <a href="{% url 'create-participant' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Participant</a>
+
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="w-full text-left px-4 py-2 text-white hover:bg-orange-400">
+              Logout
+            </button>
+          </form>
+        </div>
+      </div>
+      {% endif %}
+    </nav>
+  </header>
+
+  <script>
+    const btn = document.getElementById('user-menu-button');
+    const menu = document.getElementById('user-menu');
+    if (btn && menu) {
+      btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+      document.addEventListener('click', (e) => {
+        if (!btn.contains(e.target) && !menu.contains(e.target)) {
+          menu.classList.add('hidden');
+        }
+      });
+    }
+  </script>
