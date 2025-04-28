@@ -49,12 +49,12 @@
         {% for event in events %}
         <div class="grid grid-cols-4 p-4 border-b border-white text-base text-gray-900 items-center">
             <div class="font-medium text-black">
-                <a href="?event_id={{ event.id }}" class="text-blue-700 underline">{{ event.name }}</a>
-            </div>
+                <a href="{% url 'event-page' event.id %}" class="text-blue-700 underline">{{ event.name }}</a>
+            </div>            
             <div class="text-black">{{ event.date }}</div>
             <div class="text-black">{{ event.time }}</div>
             <div class="text-black">{{ event.location }}</div>
-            <div class="col-span-4 flex gap-2 justify-end">
+            <div class="col-span-4 flex gap-2 justify-end mt-4">
                <a href='{%url "update" event.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
                         Upgrade
                 </a>

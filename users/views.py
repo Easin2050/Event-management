@@ -7,6 +7,7 @@ from users.forms import LoginForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Prefetch
+from events.urls import search
 
 
 def is_admin(user):
@@ -35,7 +36,7 @@ def sign_in(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('home')
+            return redirect('search')
     return render(request, 'registration/login.html', {'form': form})
 
 @login_required

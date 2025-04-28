@@ -28,7 +28,7 @@ def create_event(request):
     # participants = Participant.objects.all()  
     form = EventModelForm()
     if request.method == "POST":
-        form = EventModelForm(request.POST)  
+        form = EventModelForm(request.POST,request.FILES)  
         if form.is_valid():
             form.save()
             messages.success(request, "Event Created Successfully")
@@ -61,7 +61,6 @@ def create_category(request):
 
 @login_required
 @user_passes_test(is_admin_or_organizer, login_url='no-permission')
-@permission_required('events.show_dashboard', login_url='no-permission') 
 def dashboard(request):
     today = timezone.now().date()
     event_type = request.GET.get("type", "")

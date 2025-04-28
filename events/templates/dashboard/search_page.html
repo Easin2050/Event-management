@@ -53,10 +53,18 @@
 
 <div class="bg-white border-2 border-orange-500 shadow-lg rounded-lg overflow-hidden w-full md:w-[80%] flex flex-col md:flex-row gap-4 p-4 mx-auto m-4 transition hover:shadow-xl">
 
-  <div class="w-full md:w-1/2">
-    <img src="{% static 'images/event-1.jpg' %}" alt="Event Image" class="w-full h-56 md:h-80 object-cover rounded-lg">
+  <div class="w-full md:w-1/2 h-56 md:h-80 overflow-hidden rounded-lg">
+    {% if event.asset %}
+      {% if event.asset.url %}
+          <img src="{{ event.asset.url }}" alt="Event Image" class="w-full h-full object-cover">
+      {% else %}
+          <img src="{% static 'images/no_image.png' %}" alt="Default Event Image" class="w-full h-full object-cover">
+      {% endif %}
+    {% else %}
+      <img src="{% static 'images/no_image.png' %}" alt="Default Event Image" class="w-full h-full object-cover">
+    {% endif %}
   </div>
-
+  
   <div class="w-full md:w-1/2 flex flex-col justify-between">
 
     <div class="flex-1 flex flex-col justify-between h-full">

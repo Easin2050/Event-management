@@ -8,9 +8,7 @@ from django.contrib.auth.models import User
 
 class StyledFormMixin:
     """Mixin to apply consistent styling to form fields"""
-
     default_classes = "border-2 border-gray-300 w-full rounded-lg shadow-sm p-2 focus:outline-none focus:border-rose-500 focus:ring-rose-500"
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.apply_styled_widgets()
@@ -58,10 +56,9 @@ class StyledFormMixin:
 
 
 class EventModelForm(StyledFormMixin, forms.ModelForm):
-
     class Meta:
         model = Event
-        fields = ['name', 'description', 'date', 'time', 'location', 'category', 'participants']
+        fields = ['name', 'description', 'date', 'time', 'location', 'category', 'participants','asset']
         widgets = {
             'date': forms.SelectDateWidget(),
             'time': forms.TimeInput(attrs={'type': 'time'}),

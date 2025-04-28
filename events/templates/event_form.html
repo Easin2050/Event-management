@@ -12,7 +12,7 @@
                 {% endfor %}
             {% endif %}
         </div>      
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             {{form.as_p}}
             <button type="submit" class="w-1/2 align-middle m-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
