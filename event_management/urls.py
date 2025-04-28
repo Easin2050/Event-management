@@ -25,7 +25,7 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("events/", include("events.urls")),
-    path("", search, name="home"),
+    # path("", search, name="home"),
     path("users/", include("users.urls")),
     path('',home,name='home'),
     path('no-permission/',no_permission,name='no-permission')
