@@ -8,7 +8,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Prefetch
 from events.urls import search
-
+from events.models import Event,Category
 
 def is_admin(user):
     return user.groups.filter(name='Admin').exists()

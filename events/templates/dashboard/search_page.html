@@ -1,6 +1,7 @@
-{% extends "dashboard/base.html" %}
+{% extends "base2.html" %}
 {% load static %}
 <!--Hero Section-->
+{% block content %}
 {% block hero_section %}
 <div class="relative w-full h-[500px]">
     <img src="{% static 'images/event-4.jpg' %}" alt="Event" class="w-full h-full object-cover">
@@ -180,3 +181,4 @@
 
 {% endfor %}
 {% endblock event_card %}
+{% endblock content %}

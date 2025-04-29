@@ -136,11 +136,13 @@ def search(request):
 
     for event in events:
         event.participant_count = event.participants.count() 
-
+    
     context = {
         'events': events,
         'query': query,
         'total_category': total_category,
+        'is_admin': is_admin(request.user),
+        'is_organizer': is_organizer(request.user),
     } 
     return render(request, 'dashboard/search_page.html', context)
 
