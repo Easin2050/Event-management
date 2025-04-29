@@ -50,7 +50,6 @@
 </div>
 {% block event_card %}
 {% for event in events %}
-<<<<<<< HEAD
 <a href="{% url 'event-page' event.id %}" class="block">
     <div class="bg-white border-2 border-orange-500 shadow-lg rounded-lg overflow-hidden w-full md:w-[80%] flex flex-col md:flex-row gap-4 p-4 mx-auto m-4 transition hover:shadow-xl">
         <div class="w-full md:w-1/2 h-full">
@@ -95,7 +94,6 @@
                         <h2 class="text-4xl font-bold">{{ event.participant_count }}</h2>
                     </div>                    
                 </div>
-=======
 
 <div class="bg-white border-2 border-orange-500 shadow-lg rounded-lg overflow-hidden w-full md:w-[80%] flex flex-col md:flex-row gap-4 p-4 mx-auto m-4 transition hover:shadow-xl">
 
@@ -144,7 +142,6 @@
             <h1 class="text-lg font-bold">Location</h1>
             <div class="h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1 w-fit">
               <h2 class="text-lg font-bold p-3">{{ event.location }}</h2>
->>>>>>> assignment-2
             </div>
         </div>
         </div>
