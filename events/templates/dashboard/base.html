@@ -10,7 +10,7 @@
 <body class="bg-gray-100">
 
     <!-- Navbar -->
-    {% block navbar %} 
+    {% comment %} {% block navbar %} 
     <header class="bg-black shadow-md">
       <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16 relative">
         <a href="{% url 'search' %}" class="text-3xl font-bold text-orange-500">EVENTMATE</a>
@@ -51,7 +51,6 @@
         {% endif %}
       </nav>
     </header>
-
     <script>
       const btn = document.getElementById('user-menu-button');
       const menu = document.getElementById('user-menu');
@@ -64,7 +63,7 @@
         });
       }
     </script>
-    {% endblock navbar %}
+    {% endblock navbar %} {% endcomment %}
 
     <!-- Hero Section -->
     {% block hero_section %}{% endblock hero_section %}
