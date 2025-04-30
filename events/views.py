@@ -23,6 +23,7 @@ def home_page(request):
     return render(request, "dashboard/homepage.html")
 
 @login_required
+@user_passes_test(is_admin_or_organizer, login_url='no-permission')
 @permission_required('events.add_event', login_url='no-permission')
 def create_event(request):
     # participants = Participant.objects.all()  
@@ -36,6 +37,7 @@ def create_event(request):
     return render(request, 'event_form.html', {"form": form} )
 
 @login_required
+@user_passes_test(is_admin_or_organizer, login_url='no-permission')
 @permission_required('events.add_participant', login_url='no-permission')
 def create_participant(request):
     form = ParticipantForm()
@@ -48,6 +50,7 @@ def create_participant(request):
     return render(request, 'participant_form.html', {"form": form})
 
 @login_required
+@user_passes_test(is_admin_or_organizer, login_url='no-permission')
 @permission_required('events.add_category', login_url='no-permission')
 def create_category(request):
     form = CategoryForm()
@@ -74,7 +77,7 @@ def dashboard(request):
         past_events=Count('id', filter=Q(date__lt=today)),
     )
 
-    participants = User.objects.all()
+    participants = User.objects.filter(is_superuser=False)
     event_participants = Event.objects.aggregate(
         total_participants=Count('participants', distinct=True)
     )
