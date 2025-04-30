@@ -36,7 +36,11 @@ def sign_in(request):
         if form.is_valid():
             user = form.get_user()
             login(request, user)
-            return redirect('search')
+            
+            if user.groups.filter(name='Admin').exists():
+                return redirect('admin-dashboard')
+            else:
+                return redirect('search')
     return render(request, 'registration/login.html', {'form': form})
 
 @login_required

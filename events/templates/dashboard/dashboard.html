@@ -1,5 +1,5 @@
-{% extends "dashboard/base.html" %}
-
+{% extends "base2.html" %}
+{% block content %}
 {% block hero_section %}
 {% comment %} <div class="flex justify-center gap-4 m-4">
     <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition h-12 w-32 text-xl">
@@ -69,6 +69,7 @@
     {% endfor %}
     </div>
     <p class="text-black font-bold mb-4 mt-4 text-2xl">Participant Details</p>
+<<<<<<< HEAD
 
 
     <div class="bg-green-200 rounded-xl shadow-2xl">
@@ -84,12 +85,17 @@
                     Upgrade
 
 {% for participant in participant_users %}
+=======
+{% for participant in participants %}
+>>>>>>> assignment-2
 <div class="bg-green-200 rounded-xl shadow-2xl mb-4">
     <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
         <div>Name</div>
+        <div>Email</div>
     </div>
     <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
-        <div class="font-medium text-black">{{ participant.username }}</div>
+        <div class="font-medium text-black">{{ participant.first_name }} {{ participant.last_name }}</div>
+        <div class="font-medium text-black">{{ participant.email }}</div>
 
         <div class="col-span-3 flex justify-end gap-2">
             <a href='{% url "update_participant" participant.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
@@ -128,3 +134,4 @@
     </div> {% endcomment %}
 </div>
 {% endblock hero_section %}
+{% endblock content %}
