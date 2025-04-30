@@ -1,8 +1,8 @@
 {% extends "base2.html" %}
 {% load static %}
 {% block content %}
-<!--Hero Section-->
-{% block hero_section %}
+
+<!-- Hero Section -->
 <div class="relative w-full h-[500px]">
     <img src="{% static 'images/event-4.jpg' %}" alt="Event" class="w-full h-full object-cover">
     <div class="absolute inset-0 bg-black opacity-50"></div>
@@ -19,8 +19,8 @@
         </form>
     </div>
 </div>
-{% endblock hero_section %}
-{% block search_and_categoty %}
+
+<!-- Search and Category Section -->
 <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10">
     <div class="w-full max-w-2xl mx-auto"> 
         <div class="flex flex-col md:flex-row justify-center items-center gap-4">
@@ -35,41 +35,34 @@
             </form>
         </div>
     </div>
-        <div class="flex flex-wrap justify-center gap-4 mt-6 columns-8 text-base">
-            {% for category in total_category %}
-            <a href="{% url "search" %}?type={{category.name}}" class="w-24 h-12 flex items-center justify-center px-4 py-3 border-2 border-yellow-400 text-black rounded-full bg-white hover:bg-yellow-400 transition">
-            {{ category.name }}
-            </a>
-            {% endfor %}
+    <div class="flex flex-wrap justify-center gap-4 mt-6 columns-8 text-base">
+        {% for category in total_category %}
+        <a href="{% url "search" %}?type={{category.name}}" class="w-24 h-12 flex items-center justify-center px-4 py-3 border-2 border-yellow-400 text-black rounded-full bg-white hover:bg-yellow-400 transition">
+        {{ category.name }}
+        </a>
+        {% endfor %}
+    </div> 
+</div>
 
-        </div> 
-           
-</div>{% endblock search_and_categoty %}
+<!-- Event List Header -->
 <div class="mx-auto text-center">
     <h2 class="font-sans text-[40px] md:text-[50px] px-4 md:px-8">Event List</h2>
 </div>
-</div>
-{% block event_card %}
-{% for event in events %}
 
+<!-- Event Cards -->
+{% for event in events %}
 <div class="bg-white border-2 border-orange-500 shadow-lg rounded-lg overflow-hidden w-full md:w-[80%] flex flex-col md:flex-row gap-4 p-4 mx-auto m-4 transition hover:shadow-xl">
 
   <div class="w-full md:w-1/2 h-56 md:h-80 overflow-hidden rounded-lg">
-    {% if event.asset %}
-      {% if event.asset.url %}
-          <img src="{{ event.asset.url }}" alt="Event Image" class="w-full h-full object-cover">
-      {% else %}
-          <img src="{% static 'images/no_image.png' %}" alt="Default Event Image" class="w-full h-full object-cover">
-      {% endif %}
+    {% if event.asset and event.asset.url %}
+        <img src="{{ event.asset.url }}" alt="Event Image" class="w-full h-full object-cover">
     {% else %}
-      <img src="{% static 'images/no_image.png' %}" alt="Default Event Image" class="w-full h-full object-cover">
+        <img src="{% static 'images/no_image.png' %}" alt="Default Event Image" class="w-full h-full object-cover">
     {% endif %}
   </div>
   
   <div class="w-full md:w-1/2 flex flex-col justify-between">
-
     <div class="flex-1 flex flex-col justify-between h-full">
-
       <div>
         <a href="{% url 'event-page' event.id %}" class="text-2xl font-bold text-blue-600 hover:underline">
           {{ event.name }}
@@ -79,7 +72,6 @@
       </div>
 
       <div class="mt-auto">
-
         <div class="flex flex-wrap gap-6 mt-4 items-end">
           <div>
             <h1 class="text-lg font-bold">Date</h1>
@@ -100,26 +92,26 @@
             <div class="h-8 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1 w-fit">
               <h2 class="text-lg font-bold p-3">{{ event.location }}</h2>
             </div>
+          </div>
         </div>
-        </div>
+
         <div class="mt-4">
             <h1 class="text-lg font-bold">Participants</h1>
             <div class="w-10 h-12 bg-yellow-400 text-black flex justify-center items-center rounded-md mt-1">
               <h2 class="text-4xl font-bold p-3">{{ event.participants.count }}</h2>
             </div>
-          </div>
-  
+        </div>
+
         <div class="flex flex-col md:flex-row justify-between items-center gap-4 mt-6">
-            
           {% if messages %}
-          {% for message in messages %}
-            <div class="alert {{ message.tags }}">{{ message }}</div>
-          {% endfor %}
-        {% endif %}
+            {% for message in messages %}
+              <div class="alert {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
 
           <a href="{% url 'event-page' event.id %}" 
-          class="w-full md:w-auto bg-yellow-400 text-black font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-yellow-300 transition duration-200">
-          View Details
+             class="w-full md:w-auto bg-yellow-400 text-black font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-yellow-300 transition duration-200">
+             View Details
           </a>
 
           <form method="POST" action="{% url 'rsvp_event' event.id %}" class="w-full md:w-auto">
@@ -128,13 +120,12 @@
                     class="w-full md:w-auto bg-yellow-400 text-black font-semibold px-6 py-2 rounded-lg shadow-md hover:bg-yellow-300 transition duration-200">
               RSVP
             </button>
-        </form>        
+          </form>        
         </div>
       </div>
     </div>
   </div>
 </div>
-
 {% endfor %}
-{% endblock event_card %}
+
 {% endblock content %}
