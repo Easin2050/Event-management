@@ -68,6 +68,7 @@
         {% endfor %}
     </div>
     <p class="text-black font-bold mb-4 mt-4 text-2xl">Participant Details</p>
+<<<<<<< HEAD
     {% for participant in participants %}
     <div class="bg-green-200 rounded-xl shadow-2xl mb-4">
         <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
@@ -77,6 +78,35 @@
         <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
             <div class="font-medium text-black">{{ participant.first_name }} {{ participant.last_name }}</div>
             <div class="font-medium text-black">{{ participant.email }}</div>
+=======
+<<<<<<< HEAD
+
+
+    <div class="bg-green-200 rounded-xl shadow-2xl">
+        <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
+            <div>Name</div>
+        </div>
+        {% for participant in participants %}
+        <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
+            <div class="font-medium text-black">{{participant.name}}</div>
+    
+            <div class="col-span-3 flex justify-end gap-2">
+                <a href='{%url "update_participant" participant.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
+                    Upgrade
+
+{% for participant in participant_users %}
+=======
+{% for participant in participants %}
+>>>>>>> assignment-2
+<div class="bg-green-200 rounded-xl shadow-2xl mb-4">
+    <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
+        <div>Name</div>
+        <div>Email</div>
+    </div>
+    <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
+        <div class="font-medium text-black">{{ participant.first_name }} {{ participant.last_name }}</div>
+        <div class="font-medium text-black">{{ participant.email }}</div>
+>>>>>>> 261e94f508b8fbb5bbcfe4afb009d50ba11082df
 
             <div class="col-span-3 flex justify-end gap-2">
                 <a href='{% url "update_participant" participant.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
@@ -90,6 +120,8 @@
                 </form> 
             </div>
         </div>
+        {% endfor %}
+    </div>
     </div>
     {% endfor %}
 

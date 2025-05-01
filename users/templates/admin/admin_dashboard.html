@@ -1,3 +1,4 @@
+{% extends "base2.html" %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/output.css' %}" />
   </head>
   <body>
-    <header class="bg-black shadow-md">
+    {% comment %} <header class="bg-black shadow-md">
       <nav class="container mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16 relative">
         <a href="{% url 'search' %}" class="text-3xl font-bold text-orange-500">EVENTMATE</a>
     
@@ -46,7 +47,7 @@
           </div>
         </div>
       </nav>
-    </header>
+    </header> {% endcomment %}
     
     <main class="pt-4">
       {% block content %}
