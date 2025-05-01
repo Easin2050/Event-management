@@ -246,15 +246,34 @@ def rsvp_event(request, event_id):
     event = Event.objects.get(id=event_id)
 
     if RSVP.objects.filter(user=request.user, event=event).exists():
-        messages.warning(request, "You have already RSVP'd to this event.")
+        messages.warning(request, "You have already RSVP to this event.")
     else:
         RSVP.objects.create(user=request.user, event=event)
         event.participants.add(request.user)
-        messages.success(request, "Successfully RSVP'd for the event!")
+        messages.success(request, "Successfully RSVP for the event!")
 
     return redirect('user_dashboard')
+
+
+@login_required
+def rsvp_delete(request, event_id):
+    event = Event.objects.get(id=event_id)
+    rsvp = RSVP.objects.filter(user=request.user, event=event).first()
+    if rsvp:
+        rsvp.delete()
+        event.participants.remove(request.user)
+        messages.success(request, "Successfully removed RSVP for the event!")
+    else:
+        messages.warning(request, "You have not RSVP'd to this event.")
+
+    return redirect('user_dashboard')
+
 
 @login_required
 @user_passes_test(is_admin, login_url='no-permission')
 def participant_page(request):
-    return render(request,'dashboard/participant_page.html')
+    participants = User.objects.filter()
+    context = {
+        'participants': participants,
+    }
+    return render(request,'dashboard/participant_page.html',context)
