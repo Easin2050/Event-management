@@ -48,7 +48,7 @@
         {% for event in events %}
         <div class="grid grid-cols-4 p-4 border-b border-white text-base text-gray-900 items-center">
             <div class="font-medium text-black">
-                <a href="{% url 'event-page' event.id %}" class="text-blue-700 underline">{{ event.name }}</a>
+                <a href="{% url 'event-page' event.id %}" class="text-black underline">{{ event.name }}</a>
             </div>            
             <div class="text-black">{{ event.date }}</div>
             <div class="text-black">{{ event.time }}</div>
