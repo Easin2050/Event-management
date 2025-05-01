@@ -5,12 +5,14 @@
     <p class="text-black font-bold mb-4 text-2xl">Participant Details</p>
     <div class="bg-green-200 rounded-xl shadow-2xl">
         <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
+            <div>User name</div>
             <div>Name</div>
             <div>Email</div>
         </div>
 
         {% for participant in participants %}
         <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
+            <div class="font-medium text-black">{{ participant.username }}</div>
             <div class="font-medium text-black">{{ participant.first_name }} {{ participant.last_name }}</div>
             <div class="font-medium text-black">{{ participant.email }}</div>
             <div class="col-span-2 flex justify-end gap-2">
