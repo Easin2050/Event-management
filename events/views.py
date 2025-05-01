@@ -36,18 +36,18 @@ def create_event(request):
             return redirect('create-event')
     return render(request, 'event_form.html', {"form": form} )
 
-@login_required
-@user_passes_test(is_admin_or_organizer, login_url='no-permission')
-@permission_required('events.add_participant', login_url='no-permission')
-def create_participant(request):
-    form = ParticipantForm()
-    if request.method == "POST":
-        form = ParticipantForm(request.POST)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Participant Created Successfully")
-            return redirect('create-participant') 
-    return render(request, 'participant_form.html', {"form": form})
+# @login_required
+# @user_passes_test(is_admin_or_organizer, login_url='no-permission')
+# @permission_required('events.add_participant', login_url='no-permission')
+# def create_participant(request):
+#     form = ParticipantForm()
+#     if request.method == "POST":
+#         form = ParticipantForm(request.POST)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "Participant Created Successfully")
+#             return redirect('create-participant') 
+#     return render(request, 'participant_form.html', {"form": form})
 
 @login_required
 @user_passes_test(is_admin_or_organizer, login_url='no-permission')
@@ -184,30 +184,30 @@ def event_page(request, id):
     }
     return render(request, 'dashboard/event_page.html', context)
 
-@login_required
-@permission_required('events.change_participant', login_url='no-permission')
-def update_participant(request, id):
-    participant = User.objects.get(id=id)
-    form = ParticipantForm(instance=participant)
-    if request.method == "POST":
-        form = ParticipantForm(request.POST, instance=participant)
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Participant updated Successfully")
-            return redirect('dashboard')
-    return render(request, 'participant_form.html', {"form": form}) 
+# @login_required
+# @permission_required('events.change_participant', login_url='no-permission')
+# def update_participant(request, id):
+#     participant = User.objects.get(id=id)
+#     form = ParticipantForm(instance=participant)
+#     if request.method == "POST":
+#         form = ParticipantForm(request.POST, instance=participant)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, "Participant updated Successfully")
+#             return redirect('dashboard')
+#     return render(request, 'participant_form.html', {"form": form}) 
 
-@login_required
-@permission_required('events.delete_participant', login_url='no-permission')
-def delete_participant(request, id):
-    if request.method == "POST":
-        participant = User.objects.get(id=id)
-        participant.delete()
-        messages.success(request, "Participant deleted Successfully")
-        return redirect('dashboard')
-    else:
-        messages.error(request, "Something went wrong")
-        return redirect('dashboard')
+# @login_required
+# @permission_required('events.delete_participant', login_url='no-permission')
+# def delete_participant(request, id):
+#     if request.method == "POST":
+#         participant = User.objects.get(id=id)
+#         participant.delete()
+#         messages.success(request, "Participant deleted Successfully")
+#         return redirect('dashboard')
+#     else:
+#         messages.error(request, "Something went wrong")
+#         return redirect('dashboard')
 
 @login_required
 def user_dashboard(request):
