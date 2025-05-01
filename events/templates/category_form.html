@@ -2,25 +2,26 @@
 {% load static %}
 
 {% block content %}
-  <div class="w-1/2 mx-auto mt-8">
-    
-    {% if messages %}
-      {% for message in messages %}
-        <div class="px-2 py-1 text-white rounded 
-                    {% if 'success' in message.tags %}bg-green-500 
-                    {% elif 'error' in message.tags or 'danger' in message.tags %}bg-red-500 
-                    {% else %}bg-blue-500{% endif %}">
-          {{ message }}
-        </div>
-      {% endfor %}
-    {% endif %}
-    
-    <form action="" method="POST" class="mt-4">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit" class="w-1/2 m-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
-        Submit
-      </button>
+<div class="w-1/2 mx-auto mt-8">
+    <div class="flex items-center justify-center">
+        <h1 class="font-semibold text-3xl">Category Form</h1>
+      </div>
+          <div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="px-2 py-1 {% if 'success' in message.tags %}bg-green-500{% endif %}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>      
+
+    <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="w-1/2 align-middle m-4 bg-green-500 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500">
+            Submit
+        </button>        
     </form>
-  </div>
+</div>
 {% endblock %}
