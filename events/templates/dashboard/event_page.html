@@ -74,7 +74,7 @@
         <h1 class="text-4xl border-b-white text-yellow-400 mb-2">Participants</h1>
         <p class="text-2xl font-semibold text-white">{{ event_participants.count }}</p>
 
-        {% for participant in event_participants %}
+        {% for participant in participants %}
             <p class="text-xl font-semibold text-white">{{ participant.get_full_name }}</p>
         {% empty %}
             <p class="text-white text-sm">No participants yet.</p>
