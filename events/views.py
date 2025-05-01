@@ -255,5 +255,6 @@ def rsvp_event(request, event_id):
     return redirect('user_dashboard')
 
 @login_required
+@user_passes_test(is_admin, login_url='no-permission')
 def participant_page(request):
     return render(request,'dashboard/participant_page.html')

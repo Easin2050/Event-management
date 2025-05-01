@@ -1,18 +1,12 @@
+{% extends "base2.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Access Denied</title>
-    <link rel="stylesheet" href="{% static 'css/output.css' %}">
-</head>
+{% block content %}
 <body class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="flex flex-col items-center justify-center h-screen">
+    <div class="flex flex-col items-center justify-center mt-4">
         <div class="text-center bg-white p-6 rounded-lg shadow-md max-w-md">
             <img src="{% static 'images/no_permission.jpg' %}" alt="Access Denied" class="w-32 mx-auto">
             <p class="text-2xl text-gray-700 mt-2">You do not have permission to access this page.</p>
         </div>
     </div>
 </body>
-</html>
+{% endblock content %}
