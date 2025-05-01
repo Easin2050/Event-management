@@ -37,7 +37,7 @@ def create_event(request):
     return render(request, 'event_form.html', {"form": form} )
 
 @login_required
-@user_passes_test(is_admin_or_organizer, login_url='no-permission')
+@user_passes_test(is_admin, login_url='no-permission')
 @permission_required('events.add_participant', login_url='no-permission')
 def create_participant(request):
     form = ParticipantForm()
@@ -76,7 +76,7 @@ def dashboard(request):
         upcoming_events=Count("id", filter=Q(date=today) | Q(date__gt=today)),
         past_events=Count('id', filter=Q(date__lt=today)),
     )
-
+    all_category=Category.objects.all()
     participants = User.objects.filter(is_superuser=False)
     event_participants = Event.objects.aggregate(
         total_participants=Count('participants', distinct=True)
@@ -110,6 +110,7 @@ def dashboard(request):
         'event_participants': event_participants,
         'participant_users': participant_users,
         'selected_event': selected_event,
+        'all_category': all_category,
     }
     return render(request, "dashboard/dashboard.html", context)
 
@@ -194,7 +195,7 @@ def update_participant(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, "Participant updated Successfully")
-            return redirect('dashboard')
+            return redirect('participant_page')
     return render(request, 'participant_form.html', {"form": form}) 
 
 @login_required
@@ -204,6 +205,31 @@ def delete_participant(request, id):
         participant = User.objects.get(id=id)
         participant.delete()
         messages.success(request, "Participant deleted Successfully")
+        return redirect('participant_page')
+    else:
+        messages.error(request, "Something went wrong")
+        return redirect('dashboard')
+
+@login_required
+@permission_required('events.change_category', login_url='no-permission')
+def update_category(request, id):
+    category = Category.objects.get(id=id)
+    form = CategoryForm(instance=category)
+    if request.method == "POST":
+        form = CategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Category updated Successfully")
+            return redirect('dashboard')
+    return render(request, 'category_form.html', {"form": form}) 
+
+@login_required
+@permission_required('events.delete_category', login_url='no-permission')
+def delete_category(request, id):
+    if request.method == "POST":
+        category = Category.objects.get(id=id)
+        category.delete()
+        messages.success(request, "Category deleted Successfully")
         return redirect('dashboard')
     else:
         messages.error(request, "Something went wrong")
@@ -227,3 +253,8 @@ def rsvp_event(request, event_id):
         messages.success(request, "Successfully RSVP'd for the event!")
 
     return redirect('user_dashboard')
+
+@login_required
+@user_passes_test(is_admin, login_url='no-permission')
+def participant_page(request):
+    return render(request,'dashboard/participant_page.html')
