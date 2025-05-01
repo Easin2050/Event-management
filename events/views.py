@@ -110,6 +110,7 @@ def dashboard(request):
         'event_participants': event_participants,
         'participant_users': participant_users,
         'selected_event': selected_event,
+        'all_category': all_category,
     }
     return render(request, "dashboard/dashboard.html", context)
 
