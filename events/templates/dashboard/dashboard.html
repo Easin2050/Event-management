@@ -36,11 +36,7 @@
         {% for event in events %}
         <div class="grid grid-cols-4 p-4 border-b border-white text-base text-gray-900 items-center">
             <div class="font-medium text-black">
-<<<<<<< HEAD
-                <a href="{% url 'event-page' event.id %}" class="text-black underline">{{ event.name }}</a>
-=======
                 <a href="{% url 'event-page' event.id %}" class="text-black">{{ event.name }}</a>
->>>>>>> assignment-2
             </div>            
             <div class="text-black">{{ event.date }}</div>
             <div class="text-black">{{ event.time }}</div>
@@ -59,21 +55,7 @@
         </div>
         {% endfor %}
     </div>
-<<<<<<< HEAD
-    <p class="text-black font-bold mb-4 mt-4 text-2xl">Participant Details</p>
-    <div class="bg-green-200 rounded-xl shadow-2xl mb-4">
-        <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
-            <div>Name</div>
-            <div>Email</div>
-        </div>
-    
-        {% for participant in participants %}
-        <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
-            <div class="font-medium text-black">{{ participant.first_name }} {{ participant.last_name }}</div>
-            <div class="font-medium text-black">{{ participant.email }}</div>
-            <div class="col-span-3 flex justify-end gap-2">
-                <a href="{% url 'update_participant' participant.id %}" class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
-=======
+
     <p class="text-black font-bold mb-4 mt-4 text-2xl">Category Details</p>
 {% for category in all_category %}
 <div class="bg-green-200 rounded-xl shadow-2xl mb-4">
@@ -84,7 +66,6 @@
         <div class="font-medium text-black">{{ category.name }}</div>
             <div class="col-span-3 flex justify-end gap-2">
                 <a href='{% url "update_category" category.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
->>>>>>> assignment-2
                     Upgrade
                 </a>
                 <form action="{% url 'delete_category' category.id %}" method="POST">
@@ -97,29 +78,5 @@
         </div>
         {% endfor %}
     </div>
-<<<<<<< HEAD
-    
-
-    {% comment %} <p class="text-black font-bold mb-4 mt-4 text-2xl">Category Details</p>
-
-    <div class="bg-green-200 rounded-xl shadow-2xl">
-        <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
-            <div>Name</div>
-        </div>
-        <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
-            <div class="font-medium text-black">Name</div>
-            <div class="col-span-3 flex justify-end gap-2">
-                <button class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
-                    Upgrade
-                </button>
-                <button class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition p-3">
-                    Delete
-                </button>
-            </div>
-        </div>
-    </div> {% endcomment %}
-=======
-    </div>
->>>>>>> assignment-2
 </div>
 {% endblock %}
