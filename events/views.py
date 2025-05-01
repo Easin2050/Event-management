@@ -62,8 +62,6 @@ def create_category(request):
             return redirect('create-category') 
     return render(request, 'category_form.html', {"form": form})
 
-@login_required
-@user_passes_test(is_admin_or_organizer, login_url='no-permission')
 def dashboard(request):
     today = timezone.now().date()
     event_type = request.GET.get("type", "")
