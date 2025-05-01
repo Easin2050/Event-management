@@ -37,7 +37,7 @@ def create_event(request):
     return render(request, 'event_form.html', {"form": form} )
 
 @login_required
-@user_passes_test(is_admin_or_organizer, login_url='no-permission')
+@user_passes_test(is_admin, login_url='no-permission')
 @permission_required('events.add_participant', login_url='no-permission')
 def create_participant(request):
     form = ParticipantForm()
@@ -195,7 +195,7 @@ def update_participant(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, "Participant updated Successfully")
-            return redirect('dashboard')
+            return redirect('participant_page')
     return render(request, 'participant_form.html', {"form": form}) 
 
 @login_required
@@ -205,7 +205,7 @@ def delete_participant(request, id):
         participant = User.objects.get(id=id)
         participant.delete()
         messages.success(request, "Participant deleted Successfully")
-        return redirect('dashboard')
+        return redirect('participant_page')
     else:
         messages.error(request, "Something went wrong")
         return redirect('dashboard')
@@ -253,3 +253,7 @@ def rsvp_event(request, event_id):
         messages.success(request, "Successfully RSVP'd for the event!")
 
     return redirect('user_dashboard')
+
+@login_required
+def participant_page(request):
+    return render(request,'dashboard/participant_page.html')

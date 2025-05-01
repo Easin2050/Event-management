@@ -1,21 +1,9 @@
 {% extends "base2.html" %}
 {% block content %}
-{% comment %} <div class="flex justify-center gap-4 m-4">
-    <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition h-12 w-32 text-xl">
-        Event
-    </button>
-    <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition h-12 w-32 text-xl">
-        Participant
-    </button>
-    <button class="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition h-12 w-32 text-xl">
-        Category
-    </button>
-</div> {% endcomment %}
-
 <!-- Event Cards -->
 <div class="max-w-[1200px] mx-auto p-6">
     <div class="grid grid-cols-4 gap-6 mb-8 pt-8">
-        <a href="{% url "dashboard" %}?type=total_participants">
+        <a href="{% url "participant_page" %}?type=total_participants">
         <div class="bg-green-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
             <h3 class="text-sm font-bold text-black mb-4">Total Participant</h3>
             <p class="text-3xl font-semibold">{{total_participants}}</p>
@@ -48,7 +36,7 @@
         {% for event in events %}
         <div class="grid grid-cols-4 p-4 border-b border-white text-base text-gray-900 items-center">
             <div class="font-medium text-black">
-                <a href="{% url 'event-page' event.id %}" class="text-blue-700 underline">{{ event.name }}</a>
+                <a href="{% url 'event-page' event.id %}" class="text-black">{{ event.name }}</a>
             </div>            
             <div class="text-black">{{ event.date }}</div>
             <div class="text-black">{{ event.time }}</div>
