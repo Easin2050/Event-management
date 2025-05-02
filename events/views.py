@@ -65,7 +65,7 @@ def create_category(request):
 def dashboard(request):
     today = timezone.now().date()
     event_type = request.GET.get("type", "")
-    selected_event_id = request.GET.get("event_id")
+    # selected_event_id = request.GET.get("event_id")
 
     events = Event.objects.select_related('category').prefetch_related('participants').all()
 
@@ -76,9 +76,9 @@ def dashboard(request):
     )
     all_category=Category.objects.all()
     participants = User.objects.filter(is_superuser=False)
-    event_participants = Event.objects.aggregate(
-        total_participants=Count('participants', distinct=True)
-    )
+    # event_participants = Event.objects.aggregate(
+    #     total_participants=Count('participants', distinct=True)
+    # )
     total_participants = participants.count()
 
     if event_type == "total_participants":
@@ -92,22 +92,22 @@ def dashboard(request):
     else:
         events = events.filter(date=today)
 
-    selected_event = None
-    participant_users = []
+    # selected_event = None
+    # participant_users = []
 
-    if selected_event_id:
-        selected_event = Event.objects.prefetch_related('participants').filter(id=selected_event_id).first()
-        if selected_event:
-            participant_users = selected_event.participants.all()
+    # if selected_event_id:
+    #     selected_event = Event.objects.prefetch_related('participants').filter(id=selected_event_id).first()
+    #     if selected_event:
+    #         participant_users = selected_event.participants.all()
 
     context = {
         'events': events,
         'participants': participants,
         'total_participants': total_participants,
         'event_counts': event_counts,
-        'event_participants': event_participants,
-        'participant_users': participant_users,
-        'selected_event': selected_event,
+        # 'event_participants': event_participants,
+        # 'participant_users': participant_users,
+        # 'selected_event': selected_event,
         'all_category': all_category,
     }
     return render(request, "dashboard/dashboard.html", context)
