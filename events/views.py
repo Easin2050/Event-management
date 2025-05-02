@@ -154,7 +154,7 @@ def update_event(request, id):
     events = Event.objects.get(id=id)
     form = EventModelForm(instance=events)
     if request.method == "POST":
-        form = EventModelForm(request.POST, instance=events)
+        form = EventModelForm(request.POST, request.FILES, instance=events)
         if form.is_valid():
             form.save()
             messages.success(request, "Event updated Successfully")
