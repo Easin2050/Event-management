@@ -8,11 +8,9 @@ from datetime import datetime
 from events.forms import EventModelForm, ParticipantForm, CategoryForm
 from events.models import Event,Category,RSVP
 from django.contrib.auth.models import User
-from django.views.generic import CreateView
+from django.views.generic import CreateView,ListView
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-
-
 
 def is_organizer(user):
     return user.groups.filter(name='Organizer').exists()
@@ -58,8 +56,6 @@ class CreateEvent(CreateView):
         messages.success(self.request, "Event Created Successfully")
         return super().form_valid(form)
     
-
-
 @login_required
 @user_passes_test(is_admin, login_url='no-permission')
 @permission_required('events.add_participant', login_url='no-permission')
@@ -86,7 +82,46 @@ def create_category(request):
             return redirect('create-category') 
     return render(request, 'category_form.html', {"form": form})
 
-@login_required
+dashboard_decorator=[
+    login_required,
+    user_passes_test(is_admin_or_organizer,login_url='no-permission'),
+    ]
+@method_decorator(decorator=dashboard_decorator,name='dispatch')
+class Dashboard(ListView):
+    model=Event
+    template_name='dashboard/dashboard.html'
+    context_object_name = 'event_list'
+
+    def get_queryset(self):
+        today = timezone.now().date()
+        event_type = self.request.GET.get("type", "")
+        events = Event.objects.select_related('category').prefetch_related('participants').all()
+        if event_type == "total_events":
+            return events
+        elif event_type == "upcoming_events":
+            return events.filter(date__gte=today)
+        elif event_type == "past_events":
+            return events.filter(date__lt=today)
+        else:
+            return events.filter(date=today)
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        today = timezone.now().date()
+        
+        all_events = Event.objects.all()
+        context['event_counts'] = all_events.aggregate(
+            total_events=Count('id'),
+            upcoming_events=Count("id", filter=Q(date=today) | Q(date__gt=today)),
+            past_events=Count('id', filter=Q(date__lt=today)),
+        )
+        context['all_category'] = Category.objects.all()
+        participants = User.objects.filter(is_superuser=False)
+        context['participants'] = participants
+        context['total_participants'] = participants.count()
+        return context
+    
+'''@login_required
 @user_passes_test(is_admin_or_organizer, login_url='no-permission')
 def dashboard(request):
     today = timezone.now().date()
@@ -124,7 +159,7 @@ def dashboard(request):
 
 def base(request):
     return render(request, "dashboard/base.html")
-
+'''
 @login_required
 def search(request):
     total_category = Category.objects.all()

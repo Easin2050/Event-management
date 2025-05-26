@@ -3,15 +3,22 @@
 <!-- Event Cards -->
 <div class="max-w-[1200px] mx-auto p-6">
     <div class="grid grid-cols-4 gap-6 mb-8 pt-8">
-        <a href="{% url "participant_page" %}?type=total_participants">
-        <div class="bg-green-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
-            <h3 class="text-sm font-bold text-black mb-4">Total Participant</h3>
-            <p class="text-3xl font-semibold">{{total_participants}}</p>
-        </div></a>
+        <a href="{% url 'participant_page' %}">
+        <div class="bg-blue-500 rounded-xl p-6 shadow-sm">
+                <h3 class="text-sm font-bold text-black mb-4">Total Perticipant</h3>
+            <div class="flex justify-between items-start">
+            <div>
+                <p class="text-3xl font-semibold">{{total_participants}}</p>
+            </div>
+            </div>
+        </div>
+        </a>
+        
         <a href="{% url "dashboard" %}?type=total_events">
         <div class="bg-purple-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
             <h3 class="text-sm font-bold text-black mb-4">Total Event</h3>
             <p class="text-3xl font-semibold">{{ event_counts.total_events }}</p>
+            
         </div></a>
         <a href="{% url "dashboard" %}?type=upcoming_events">
         <div class="bg-red-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
@@ -33,7 +40,7 @@
             <div>Location</div>
         </div>
 
-        {% for event in events %}
+        {% for event in event_list %}
         <div class="grid grid-cols-4 p-4 border-b border-white text-base text-gray-900 items-center">
             <div class="font-medium text-black">
                 <a href="{% url 'event-page' event.id %}" class="text-black">{{ event.name }}</a>

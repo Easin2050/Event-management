@@ -1,15 +1,14 @@
 from django.urls import path
-from events.views import home_page,event_page,dashboard,base,CreateEvent,create_participant,create_category,search,update_event,delete_event,update_participant,delete_participant,user_dashboard,rsvp_event,update_category,delete_category,participant_page,rsvp_delete
+from events.views import home_page,event_page,Dashboard,CreateEvent,create_participant,create_category,search,update_event,delete_event,update_participant,delete_participant,user_dashboard,rsvp_event,update_category,delete_category,participant_page,rsvp_delete
 urlpatterns = [
   path('home-page/',home_page,name="home-page"),
   path('event-page/<int:id>/',event_page,name="event-page"),
   path('create-event/',CreateEvent.as_view(),name="create-event"),
   path('create-participant/',create_participant,name="create-participant"),
   path('create-category/',create_category,name="create-category"),
-  path('dashboard/',dashboard,name="dashboard"),
+  path('dashboard/',Dashboard.as_view(),name="dashboard"),
   path('participant-page/',participant_page,name="participant_page"),
   path('search/',search,name="search"),
-  path('base/',base,name="base"),
   path('event/<int:event_id>/rsvp/', rsvp_event, name='rsvp_event'),
   path('event/<int:event_id>/rsvp/delete/', rsvp_delete, name='rsvp_delete'),
   path('user-dashboard/', user_dashboard, name="user_dashboard"),
