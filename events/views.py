@@ -8,6 +8,10 @@ from datetime import datetime
 from events.forms import EventModelForm, ParticipantForm, CategoryForm
 from events.models import Event,Category,RSVP
 from django.contrib.auth.models import User
+from django.views.generic import CreateView
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
+
 
 
 def is_organizer(user):
@@ -16,13 +20,16 @@ def is_organizer(user):
 def is_admin(user):
     return user.groups.filter(name='Admin').exists()
 
+def is_user(user):
+    return user.groups.filter(name='User').exists()
+
 def is_admin_or_organizer(user):
     return is_admin(user) or is_organizer(user)
 
 def home_page(request):
     return render(request, "dashboard/homepage.html")
 
-@login_required
+'''@login_required
 @user_passes_test(is_admin_or_organizer, login_url='no-permission')
 @permission_required('events.add_event', login_url='no-permission')
 def create_event(request):
@@ -35,6 +42,23 @@ def create_event(request):
             messages.success(request, "Event Created Successfully")
             return redirect('create-event')
     return render(request, 'event_form.html', {"form": form} )
+'''
+create_view_decorator = [
+    login_required,
+    user_passes_test(is_admin_or_organizer, login_url='no-permission'),
+    permission_required('events.add_event', login_url='no-permission'),
+]
+@method_decorator(create_view_decorator, name='dispatch')
+class CreateEvent(CreateView):
+    template_name='event_form.html'
+    form_class=EventModelForm
+    success_url=reverse_lazy('create-event')
+    
+    def form_valid(self, form):
+        messages.success(self.request, "Event Created Successfully")
+        return super().form_valid(form)
+    
+
 
 @login_required
 @user_passes_test(is_admin, login_url='no-permission')
@@ -261,3 +285,14 @@ def participant_page(request):
         'participants': participants,
     }
     return render(request,'dashboard/participant_page.html',context)
+
+'''@login_required
+def dashboard(request):
+    if is_organizer(request.user):
+        return redirect('manager-dashboard')
+    elif is_user(request.user):
+        return redirect('user_dashboard')
+    elif is_admin(request.user):
+        return redirect('admin-dashboard')
+
+    return redirect('no-permission')'''
