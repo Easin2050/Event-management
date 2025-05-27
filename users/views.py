@@ -13,6 +13,7 @@ from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.utils.decorators import method_decorator
+from django.contrib.auth.views import PasswordChangeView,PasswordResetView,PasswordResetDoneView,PasswordChangeDoneView,PasswordResetCompleteView,PasswordContextMixin,PasswordResetConfirmView
 
 
 def is_admin(user):
@@ -37,17 +38,21 @@ def sign_up(request):
 
 
 class SignIn(LoginView):
-    authentication_form = LoginForm
-    template_name='registration/login.html'
+    form_class = LoginForm
 
-    def form_valid(self, form):
-        user = form.get_user()
-        login(self.request, user)
-        if user.groups.filter(name='Admin').exists():
-            return redirect('admin-dashboard')
-        else:
-            return redirect('search')
-    
+    def get_success_url(self):
+        next_url = self.request.GET.get('next')
+        return next_url if next_url else super().get_success_url()
+
+'''def sign_in(request):
+    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            # return redirect('')
+    return render(request, 'registration/login.html', {'form': form})'''
     
 
 '''def sign_in(request):
@@ -155,3 +160,10 @@ def create_group(request):
 def group_list(request):
     groups = Group.objects.prefetch_related('permissions').all()
     return render(request, 'admin/group_list.html', {'groups': groups})
+
+
+class CustomPasswordReset(PasswordResetView):
+    # form_class = 
+    template_name = 'registration/reset_password.html'	
+    html_email_template_name ='registration/reset_email.html'
+    success_url = reverse_lazy('password_reset_done')	

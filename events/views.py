@@ -95,9 +95,12 @@ class Dashboard(ListView):
     def get_queryset(self):
         today = timezone.now().date()
         event_type = self.request.GET.get("type", "")
+        event_category=Category.objects.all()
         events = Event.objects.select_related('category').prefetch_related('participants').all()
         if event_type == "total_events":
             return events
+        elif event_type=="event_category":
+            return event_category
         elif event_type == "upcoming_events":
             return events.filter(date__gte=today)
         elif event_type == "past_events":
@@ -118,6 +121,8 @@ class Dashboard(ListView):
         context['all_category'] = Category.objects.all()
         participants = User.objects.filter(is_superuser=False)
         context['participants'] = participants
+        categories=Category.objects.all()
+        context['Category_count'] = categories.count()
         context['total_participants'] = participants.count()
         return context
     
@@ -160,6 +165,8 @@ def dashboard(request):
 def base(request):
     return render(request, "dashboard/base.html")
 '''
+def homepage(request):
+    return render(request,'dashboard/homepage.html')
 
 class Search(ListView):
     model=Event
@@ -362,13 +369,22 @@ def participant_page(request):
     }
     return render(request,'dashboard/participant_page.html',context)
 
-'''@login_required
-def dashboard(request):
+@login_required
+@user_passes_test(is_admin, login_url='no-permission')
+def category_page(request):
+    categories = Category.objects.all
+    context = {
+        'categories': categories,
+    }
+    return render(request,'dashboard/category_page.html',context)
+
+@login_required
+def dashboard_based_on_user(request):
     if is_organizer(request.user):
-        return redirect('manager-dashboard')
-    elif is_user(request.user):
-        return redirect('user_dashboard')
+        return redirect('dashboard')
     elif is_admin(request.user):
         return redirect('admin-dashboard')
+    elif is_user(request.user):
+        return redirect('user_dashboard')
 
-    return redirect('no-permission')'''
+    return redirect('no-permission')

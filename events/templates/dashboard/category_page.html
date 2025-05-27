@@ -1,0 +1,30 @@
+{% extends "base2.html" %}
+{% block content %}
+<!-- Event Cards -->
+<div class="max-w-[1200px] mx-auto p-6">
+    <p class="text-black font-bold mb-4 text-2xl">Participant Details</p>
+    <div class="bg-green-200 rounded-xl shadow-2xl">
+        <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
+            <div>Category name</div>
+        </div>
+
+        {% for category in categories %}
+        <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
+            <div class="font-medium text-black">{{ category.name }}</div>
+            <div class="col-span-2 flex justify-end gap-2">
+                <a href="{% url 'update_category' category.id %}" class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition">
+                    Upgrade
+                </a>
+                <form action="{% url 'delete_category' category.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition">
+                        Delete
+                    </button>
+                </form> 
+            </div>
+        </div>
+        {% endfor %} 
+    </div>
+</div>
+
+{% endblock %}

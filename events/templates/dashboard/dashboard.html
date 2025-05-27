@@ -13,7 +13,6 @@
             </div>
         </div>
         </a>
-        
         <a href="{% url "dashboard" %}?type=total_events">
         <div class="bg-purple-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
             <h3 class="text-sm font-bold text-black mb-4">Total Event</h3>
@@ -26,12 +25,18 @@
             <p class="text-3xl font-semibold">{{event_counts.upcoming_events}}</p>
         </div></a>
         <a href="{% url "dashboard" %}?type=past_events">
-        <div class="bg-blue-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
+        <div class="bg-green-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
             <h3 class="text-sm font-bold text-black mb-4">Past Events</h3>
             <p class="text-3xl font-semibold">{{event_counts.past_events}}</p>
         </div></a>
+        <a href="{% url "category_page" %}?type=event_category">
+        <div class="bg-orange-500 rounded-xl p-6 shadow-2xs w-full overflow-hidden">
+            <h3 class="text-sm font-bold text-black mb-4">Total Category</h3>
+            <p class="text-3xl font-semibold">{{Category_count}}</p>
+        </div></a>
     </div>
     <p class="text-black font-bold mb-4 text-2xl">Event Details</p>
+    <div class='bg-white p-4 m-6 rounded-xl'>
     <div class="bg-green-200 rounded-xl shadow-2xl">
         <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
             <div>Name</div>
@@ -62,28 +67,6 @@
         </div>
         {% endfor %}
     </div>
-
-    <p class="text-black font-bold mb-4 mt-4 text-2xl">Category Details</p>
-{% for category in all_category %}
-<div class="bg-green-200 rounded-xl shadow-2xl mb-4">
-    <div class="grid grid-cols-4 p-4 border-b border-black text-base text-black items-center font-bold">
-        <div>Name</div>
-    </div>
-    <div class="grid grid-cols-4 p-6 border-b border-white text-base text-gray-900 items-center">
-        <div class="font-medium text-black">{{ category.name }}</div>
-            <div class="col-span-3 flex justify-end gap-2">
-                <a href='{% url "update_category" category.id %}' class="bg-green-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-green-600 transition p-3">
-                    Upgrade
-                </a>
-                <form action="{% url 'delete_category' category.id %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" class="bg-red-500 text-white px-5 py-2 rounded-lg shadow-md hover:bg-red-600 transition p-3">
-                        Delete
-                    </button>
-                </form> 
-            </div>
-        </div>
-        {% endfor %}
     </div>
 </div>
 {% endblock %}

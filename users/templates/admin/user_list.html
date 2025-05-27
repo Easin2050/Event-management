@@ -17,7 +17,7 @@
           {% for user in users %}
             <tr class="hover:bg-gray-100 border-b-2 border-orange-500 transition-colors duration-300">
               <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ forloop.counter }}</td>
-              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.username }} {{ user.last_name }}</td>
+              <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.username }}</td>
               <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.first_name }} {{ user.last_name }}</td>
               <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.email }}</td>
               <td class="px-4 sm:px-6 py-3 whitespace-nowrap text-gray-700">{{ user.id }}</td>
