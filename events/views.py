@@ -24,9 +24,6 @@ def is_user(user):
 def is_admin_or_organizer(user):
     return is_admin(user) or is_organizer(user)
 
-def home_page(request):
-    return render(request, "dashboard/homepage.html")
-
 '''@login_required
 @user_passes_test(is_admin_or_organizer, login_url='no-permission')
 @permission_required('events.add_event', login_url='no-permission')
@@ -160,14 +157,12 @@ def dashboard(request):
         'event_counts': event_counts,
         'all_category': all_category,
     }
-    return render(request, "dashboard/dashboard.html", context)
+    return render(request, "dashboard/dashboard.html", context)'''
 
-def base(request):
-    return render(request, "dashboard/base.html")
-'''
-def homepage(request):
-    return render(request,'dashboard/homepage.html')
-
+homepage_decorator=[
+    login_required
+]
+method_decorator(decorator=homepage_decorator,name='dispatch')
 class Search(ListView):
     model=Event
     template_name='dashboard/search_page.html'

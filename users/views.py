@@ -11,7 +11,7 @@ from django.db.models import Prefetch
 from events.models import Event,Category
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from django.views.generic import ListView
+from django.views.generic import ListView,TemplateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.views import PasswordChangeView,PasswordResetView,PasswordResetDoneView,PasswordChangeDoneView,PasswordResetCompleteView,PasswordContextMixin,PasswordResetConfirmView
 
@@ -162,8 +162,18 @@ def group_list(request):
     return render(request, 'admin/group_list.html', {'groups': groups})
 
 
-class CustomPasswordReset(PasswordResetView):
-    # form_class = 
-    template_name = 'registration/reset_password.html'	
-    html_email_template_name ='registration/reset_email.html'
-    success_url = reverse_lazy('password_reset_done')	
+class UserProfileView(TemplateView):
+    template_name='accounts/profile.html'
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        user=self.request.user
+        context['name']=user.get_full_name
+        context['username']=user.username
+        context['email']=user.email
+        context['member_since']=user.date_joined
+        context['last_login']=user.last_login
+        # context['phone_number']=user.phone_number
+        return context 
+
+

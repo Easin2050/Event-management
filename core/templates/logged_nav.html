@@ -25,9 +25,9 @@
              class="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg py-2 hidden z-50">
           <a href="{% url 'role_based_dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Dashboard</a>
           <a href="{% url 'user_dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">RSVP Page</a>
-          <a href="{% url 'create-event' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Event</a>
-          <a href="{% url 'create-category' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Category</a>
-          <a href="{% url 'create-participant' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Participant</a>
+          <a href="{% url 'profile' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Profile</a>
+          {% comment %} <a href="{% url 'create-category' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Category</a>
+          <a href="{% url 'create-participant' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Participant</a> {% endcomment %}
 
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}
