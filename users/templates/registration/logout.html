@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>You are Logged Out</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="flex items-center justify-center min-h-screen bg-gray-100">
+    {% load static %}
+    <div class="flex flex-col items-center justify-center mt-6 w-[600px]">
+        <div class="text-center bg-white p-6 rounded-lg shadow-md max-w-md">
+            <img src="{% static 'images/no_permission.jpg' %}" alt="Access Denied" class="mx-auto">
+            <p class="text-2xl text-gray-700 mt-2">You are logged out.</p>
+            <div class="mt-4">
+                <a href="{% url 'sign-in' %}" class="bg-blue-500 text-black px-4 py-2 rounded-full hover:bg-blue-700 transition">
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

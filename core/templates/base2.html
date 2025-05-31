@@ -15,22 +15,25 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
+        box-sizing: border-box;
       }
     </style>
   </head>
   <body class="bg-gray-100 text-gray-900 font-sans min-h-screen flex flex-col">
 
+    <!-- Navbar (fixed) -->
     {% if request.user.is_authenticated %}
       {% include "logged_nav.html" %}
     {% else %}
       {% include "non_logged_nav.html" %}
     {% endif %}
 
-    <main class="flex-grow pt-[96px] md:pt-[112px] lg:pt-[128px]">
+    <main class="flex-grow">
       {% block content %}
       {% endblock content %}
     </main>
 
+    <!-- Footer -->
     <footer class="bg-black shadow-md w-full">
       <div class="w-full max-w-screen-xl mx-auto p-4 md:py-8">
         <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-8">

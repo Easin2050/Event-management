@@ -4,7 +4,7 @@
       <a href="{% url 'search' %}" class="text-3xl font-bold text-orange-500">EVENTMATE</a>
 
       <div class="hidden md:flex space-x-6">
-        <a href="{% url 'role_based_dashboard' %}" class="font-medium hover:text-orange-400 text-white text-lg">Dashboard</a>
+        <a href="{% url 'dashboard' %}" class="font-medium hover:text-orange-400 text-white text-lg">Dashboard</a>
         <a href="{% url 'create-event' %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Event</a>
         <a href="{% url 'create-category' %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Category</a>
         <a href="{% url 'create-participant' %}" class="font-medium hover:text-orange-400 text-white text-lg">Create Participant</a>
@@ -23,11 +23,9 @@
 
         <div id="user-menu"
              class="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg py-2 hidden z-50">
-          <a href="{% url 'role_based_dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Dashboard</a>
+          <a href="{% url 'dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Dashboard</a>
           <a href="{% url 'user_dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">RSVP Page</a>
           <a href="{% url 'profile' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Profile</a>
-          {% comment %} <a href="{% url 'create-category' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Category</a>
-          <a href="{% url 'create-participant' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Participant</a> {% endcomment %}
 
           <form method="post" action="{% url 'logout' %}">
             {% csrf_token %}

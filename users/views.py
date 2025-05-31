@@ -186,13 +186,13 @@ class CustomPasswordChangeDone(PasswordChangeDoneView):
 
 class CustomPasswordResetView(PasswordResetView):
     form_class=CustomPasswordResetForm
-    template_name='registration/reset_pasword.html'
+    template_name='registration/reset_password.html'
     success_url=reverse_lazy('sign-in')
     html_email_template_name='registration/reset_email.html'
 
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
-        context['protocol']='https' if self.request.is_sequre() else 'http'
+        context['protocol']='https' if self.request.is_secure() else 'http'
         context['domain']=self.request.get_host()
         return context
     
