@@ -1,0 +1,24 @@
+{% extends "base2.html" %}
+{% block content %}
+<div class="flex justify-center items-center px-4 mx-auto w-1/2 mb-8 mt-8">
+  <div class="w-full max-w-md mt-8 mb-16 p-6 bg-white rounded shadow">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="mb-4 px-4 py-2 rounded text-white 
+                    {% if message.tags == 'success' %}bg-green-500
+                    {% elif message.tags == 'error' %}bg-red-500
+                    {% else %}bg-blue-500{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    <form method="POST" enctype='multipart/form-data' class="space-y-4">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md shadow mt-6">
+        Submit
+      </button>
+    </form>
+  </div>
+</div>
+{% endblock content %}

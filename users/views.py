@@ -3,7 +3,7 @@ from django.contrib.auth.models import User, Group
 from django.contrib.auth import login, logout
 from users.forms import CustomRegistrationForm, AssignRoleForm, CreateGroupForm
 from django.contrib import messages
-from users.forms import LoginForm,CustomPasswordChangeForm,CustomPasswordResetForm,CustomPasswordResetConfirmForm
+from users.forms import LoginForm,CustomPasswordChangeForm,CustomPasswordResetForm,CustomPasswordResetConfirmForm,EditProfileForm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Prefetch
@@ -11,10 +11,10 @@ from django.db.models import Prefetch
 from events.models import Event,Category
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
-from django.views.generic import ListView,TemplateView
+from django.views.generic import ListView,TemplateView,UpdateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.views import PasswordChangeView,PasswordResetView,PasswordResetDoneView,PasswordChangeDoneView,PasswordResetCompleteView,PasswordContextMixin,PasswordResetConfirmView
-
+from users.models import UserProfile
 
 def is_admin(user):
     return user.groups.filter(name='Admin').exists()
@@ -173,7 +173,9 @@ class UserProfileView(TemplateView):
         context['email']=user.email
         context['member_since']=user.date_joined
         context['last_login']=user.last_login
-        # context['phone_number']=user.phone_number
+        context['bio']=user.userprofile.bio
+        context['contact_number']=user.userprofile.contact_number
+        context['profile_images']=user.userprofile.profile_image
         return context 
 
 
@@ -208,3 +210,28 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     def form_valid(self, form):
         messages.success(self.request,'Password reset successfully')
         return super().form_valid(form)
+
+class EditProfileView(UpdateView):
+    form_class=EditProfileForm
+    template_name='accounts/update_profile.html'
+    context_object_name='form'
+    
+    def get_object(self):
+        return self.request.user
+    
+    def get_form_kwargs(self):
+        kwargs=super().get_form_kwargs()
+        kwargs['userprofile']= UserProfile.objects.get(user=self.request.user)
+        return kwargs
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_profile=UserProfile.objects.get(user=self.request.user)
+        context["form"] = self.form_class(instance=self.object,userprofile=user_profile)
+        return context
+    
+    def form_valid(self, form):
+        form.save(commit=True)
+        return redirect('profile')
+    
+    

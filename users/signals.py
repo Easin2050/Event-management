@@ -5,6 +5,7 @@ from events.models import RSVP
 from django.contrib.auth.tokens import default_token_generator
 from django.conf import settings
 from django.core.mail import send_mail
+from users.models import UserProfile
 
 @receiver(post_save, sender=User)
 def send_activation_email(sender, instance, created, **kwargs):
@@ -50,3 +51,8 @@ def send_rsvp_confirmation_email(sender, instance, created, **kwargs):
                 recipient_list=[user.email],
                 fail_silently=False
             )
+
+@receiver(post_save,sender=User)
+def create_or_update_user_profile(sender,instance,created,**kwargs):
+    if created:
+        UserProfile.objects.create(user=instance)
