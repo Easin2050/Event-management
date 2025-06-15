@@ -124,13 +124,13 @@ DATABASES = {
 
 # Database documentation https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
-        default='postgresql://event_management_db_wo2r_user:qMOL7jLAwmwGlUmyr6AAZ4tIlQscPfNx@dpg-d17dpb95pdvs7388tus0-a.oregon-postgres.render.com/event_management_db_wo2r',
-        conn_max_age=600
-    )
-}
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         # Replace this value with your local database's connection string.
+#         default='postgresql://event_management_db_wo2r_user:qMOL7jLAwmwGlUmyr6AAZ4tIlQscPfNx@dpg-d17dpb95pdvs7388tus0-a.oregon-postgres.render.com/event_management_db_wo2r',
+#         conn_max_age=600
+#     )
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
