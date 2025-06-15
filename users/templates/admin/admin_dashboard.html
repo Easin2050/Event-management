@@ -21,22 +21,21 @@
     
         <div class="relative ml-6">
           <button id="user-menu-button" class="flex items-center focus:outline-none space-x-2">
-            <img
-              class="h-8 w-8 rounded-full object-cover border-2 border-white"
-              src="{% static 'images/avater.png' %}"
-              alt="User avatar"
-            />
-            <h1 class="p-2 text-white">{{user.username}}</h1>
+          <img
+            class="h-8 w-8 rounded-full object-cover border-2 border-white"
+            src="{% if profile_images %}{{ profile_images.url }}{% else %}{% static 'images/avater.png' %}{% endif %}"
+            alt="User avatar"
+          />
+          <h1 class="p-2 text-white">{{ user.username }}</h1>
           </button>
-                
+
           
           <div id="user-menu"
                class="absolute right-0 mt-2 w-48 bg-black rounded-md shadow-lg py-2 hidden z-50">
             <a href="{% url 'admin-dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Dashboard</a>
-            <a href="{% url 'user_dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">RSVP Page</a>
             <a href="{% url 'search' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Events</a>
-            <a href="{% url 'group-list' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Groups</a>
-            <a href="{% url 'create-group' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Create Group</a>
+            <a href="{% url 'profile' %}" class="block px-4 py-2 text-white hover:bg-orange-400">Profile</a>
+            <a href="{% url 'user_dashboard' %}" class="block px-4 py-2 text-white hover:bg-orange-400">RSVP Page</a>
     
             <form method="post" action="{% url 'logout' %}">
               {% csrf_token %}

@@ -7,10 +7,13 @@ from django.contrib.auth.decorators import permission_required, user_passes_test
 from datetime import datetime
 from events.forms import EventModelForm, ParticipantForm, CategoryForm
 from events.models import Event,Category,RSVP
-from django.contrib.auth.models import User
 from django.views.generic import CreateView,ListView
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
+
 
 def is_organizer(user):
     return user.groups.filter(name='Organizer').exists()
@@ -365,7 +368,7 @@ def participant_page(request):
     return render(request,'dashboard/participant_page.html',context)
 
 @login_required
-@user_passes_test(is_admin, login_url='no-permission')
+@user_passes_test(is_admin_or_organizer, login_url='no-permission')
 def category_page(request):
     categories = Category.objects.all
     context = {

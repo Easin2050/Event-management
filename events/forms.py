@@ -2,8 +2,10 @@ from django import forms
 from events.models import Category,Event
 from django.core.exceptions import ValidationError
 from datetime import date
-from django.contrib.auth.models import User
 from django.db.models import Q
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 

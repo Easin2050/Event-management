@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 from django.contrib.auth import login, logout
 from users.forms import CustomRegistrationForm, AssignRoleForm, CreateGroupForm
 from django.contrib import messages
@@ -14,7 +14,9 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView,TemplateView,UpdateView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.views import PasswordChangeView,PasswordResetView,PasswordResetDoneView,PasswordChangeDoneView,PasswordResetCompleteView,PasswordContextMixin,PasswordResetConfirmView
-from users.models import UserProfile
+from django.contrib.auth import get_user_model
+
+User = get_user_model() 
 
 def is_admin(user):
     return user.groups.filter(name='Admin').exists()
@@ -173,9 +175,9 @@ class UserProfileView(TemplateView):
         context['email']=user.email
         context['member_since']=user.date_joined
         context['last_login']=user.last_login
-        context['bio']=user.userprofile.bio
-        context['contact_number']=user.userprofile.contact_number
-        context['profile_images']=user.userprofile.profile_image
+        context['bio']=user.bio
+        context['contact_number']=user.contact_number
+        context['profile_images']=user.profile_image
         return context 
 
 
@@ -204,14 +206,14 @@ class CustomPasswordResetView(PasswordResetView):
     
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     form_class=CustomPasswordResetConfirmForm
-    template_name='registration/reset_pasword.html'
+    template_name='registration/reset_password.html'
     success_url=reverse_lazy('sign-in')
 
     def form_valid(self, form):
         messages.success(self.request,'Password reset successfully')
         return super().form_valid(form)
 
-class EditProfileView(UpdateView):
+'''class EditProfileView(UpdateView):
     form_class=EditProfileForm
     template_name='accounts/update_profile.html'
     context_object_name='form'
@@ -232,6 +234,18 @@ class EditProfileView(UpdateView):
     
     def form_valid(self, form):
         form.save(commit=True)
+        return redirect('profile')'''
+
+class EditProfileView(UpdateView):
+    form_class=EditProfileForm
+    template_name='accounts/update_profile.html'
+    context_object_name='form'
+    
+    def get_object(self):
+        return self.request.user
+    
+    def form_valid(self, form):
+        form.save()
         return redirect('profile')
     
     

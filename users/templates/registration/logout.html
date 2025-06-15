@@ -1,22 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>You are Logged Out</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-</head>
-<body class="flex items-center justify-center min-h-screen bg-gray-100">
-    {% load static %}
-    <div class="flex flex-col items-center justify-center mt-6 w-[600px]">
-        <div class="text-center bg-white p-6 rounded-lg shadow-md max-w-md">
-            <img src="{% static 'images/no_permission.jpg' %}" alt="Access Denied" class="mx-auto">
-            <p class="text-2xl text-gray-700 mt-2">You are logged out.</p>
-            <div class="mt-4">
-                <a href="{% url 'sign-in' %}" class="bg-blue-500 text-black px-4 py-2 rounded-full hover:bg-blue-700 transition">
-                    Sign In
-                </a>
-            </div>
+{% extends "base2.html" %}
+{% load static %}
+{% block content %}
+<body class="bg-white min-h-screen flex items-center justify-center px-4">
+    <div class="flex flex-col md:flex-row items-center justify-between max-w-6xl mx-auto p-6 bg-white rounded-lg shadow-md w-full">
+        
+        <div class="md:w-1/2 text-center md:text-left">
+            <h1 class="text-4xl font-bold text-black-800 mb-4">Your are logged out</h1>
+            <p class="text-gray-600 mb-6 text-xl">Want to login again?</p>
+            <p class="text-gray-600 mb-6 text-xl">Click the button .</p>
+            <a href="{% url 'sign-in' %}" class="inline-block bg-orange-500 text-white font-semibold px-6 py-3 rounded-full hover:bg-ornage-600 transition">
+                Sign In
+            </a>
         </div>
+
+        <div class="md:w-1/2 mt-8 md:mt-0 flex justify-center">
+            <img src="{% static 'images/no_permission.jpg' %}" alt="Logged Out Illustration" class="w-full max-w-md">
+        </div>
+        
     </div>
 </body>
-</html>
+{% endblock content %}
