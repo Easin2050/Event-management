@@ -163,10 +163,13 @@ def group_list(request):
     groups = Group.objects.prefetch_related('permissions').all()
     return render(request, 'admin/group_list.html', {'groups': groups})
 
-
+user_profile_decorator=[
+    login_required(login_url='sign-in'),
+    user_passes_test(is_admin,login_url='no-permission'),
+]
+@method_decorator(decorator=user_profile_decorator,name='dispatch')
 class UserProfileView(TemplateView):
     template_name='accounts/profile.html'
-
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         user=self.request.user
@@ -236,6 +239,11 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
         form.save(commit=True)
         return redirect('profile')'''
 
+edit_profile_decorator=[
+    login_required(login_url='sign-in'),
+    user_passes_test(is_admin,login_url='no-permission'),
+]
+@method_decorator(decorator=edit_profile_decorator,name='dispatch')
 class EditProfileView(UpdateView):
     form_class=EditProfileForm
     template_name='accounts/update_profile.html'
@@ -247,5 +255,4 @@ class EditProfileView(UpdateView):
     def form_valid(self, form):
         form.save()
         return redirect('profile')
-    
-    
+
