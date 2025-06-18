@@ -167,43 +167,42 @@ homepage_decorator=[
 ]
 method_decorator(decorator=homepage_decorator,name='dispatch')
 class Search(ListView):
-    model=Event
-    template_name='dashboard/search_page.html'
-    
+    model = Event
+    template_name = 'dashboard/search_page.html'
+    context_object_name = 'events'
+
     def get_queryset(self):
+        queryset = Event.objects.all()
         query = self.request.GET.get('q', '')
         category_query = self.request.GET.get('type', '')
-        events = Event.objects.all()
         first_date = self.request.GET.get('start_date', '')
         second_date = self.request.GET.get('end_date', '')
 
         if first_date and second_date:
-            events = events.filter(date__gte=first_date, date__lte=second_date)
+            queryset = queryset.filter(date__gte=first_date, date__lte=second_date)
 
         if category_query:
-            events = events.filter(category__name=category_query)
+            queryset = queryset.filter(category__name=category_query)
 
         if query:
-            events = events.filter(
-                Q(name__icontains=query) | 
+            queryset = queryset.filter(
+                Q(name__icontains=query) |
                 Q(location__icontains=query)
             ).distinct()
 
-        for event in events:
+        for event in queryset:
             event.participant_count = event.participants.count()
-        return events
-    
+
+        return queryset
+
     def get_context_data(self, **kwargs):
-        events = Event.objects.all()
-        query = self.request.GET.get('q', '')
-        total_category = Category.objects.all()
-        context=super().get_context_data(**kwargs)
-        context['events']=events
-        context['query']=query
-        context['total_category']=total_category
-        context['is_admin']=is_admin(self.request.user)
-        context['is_organizer']=is_organizer(self.request.user)
+        context = super().get_context_data(**kwargs)
+        context['query'] = self.request.GET.get('q', '')
+        context['total_category'] = Category.objects.all()
+        context['is_admin'] = is_admin(self.request.user)
+        context['is_organizer'] = is_organizer(self.request.user)
         return context
+
 
 
 '''@login_required
