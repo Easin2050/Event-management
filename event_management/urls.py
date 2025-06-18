@@ -27,6 +27,7 @@ urlpatterns = [
     path("events/", include("events.urls")),
     # path("", search, name="home"),
     path("users/", include("users.urls")),
+    path("core/", include("core.urls")),
     path('',home,name='home'),
     path('no-permission/',no_permission,name='no-permission')
 ]+ debug_toolbar_urls()
