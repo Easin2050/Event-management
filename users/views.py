@@ -164,7 +164,7 @@ def group_list(request):
     return render(request, 'admin/group_list.html', {'groups': groups})
 
 user_profile_decorator=[
-    login_required(login_url='sign-in')
+    login_required(login_url='sign-in'),
 ]
 @method_decorator(decorator=user_profile_decorator,name='dispatch')
 class UserProfileView(TemplateView):
