@@ -165,7 +165,6 @@ def group_list(request):
 
 user_profile_decorator=[
     login_required(login_url='sign-in'),
-    user_passes_test(is_admin,login_url='no-permission'),
 ]
 @method_decorator(decorator=user_profile_decorator,name='dispatch')
 class UserProfileView(TemplateView):
@@ -241,7 +240,6 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 
 edit_profile_decorator=[
     login_required(login_url='sign-in'),
-    user_passes_test(is_admin,login_url='no-permission'),
 ]
 @method_decorator(decorator=edit_profile_decorator,name='dispatch')
 class EditProfileView(UpdateView):
