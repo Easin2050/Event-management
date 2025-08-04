@@ -43,7 +43,7 @@ def create_event(request):
 '''
 create_view_decorator = [
     login_required,
-    user_passes_test(is_admin_or_organizer),
+    user_passes_test(is_admin_or_organizer, login_url='no-permission'),
     permission_required('events.add_event', login_url='no-permission'),
 ]
 @method_decorator(create_view_decorator, name='dispatch')
@@ -70,7 +70,7 @@ def create_participant(request):
     return render(request, 'participant_form.html', {"form": form})
 
 @login_required
-@user_passes_test(is_admin_or_organizer)
+@user_passes_test(is_admin_or_organizer, login_url='no-permission')
 @permission_required('events.add_category', login_url='no-permission')
 def create_category(request):
     form = CategoryForm()
